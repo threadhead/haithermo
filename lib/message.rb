@@ -31,8 +31,12 @@ module HAIthermo
       @valid = validate_packet(packet)
     end
     
-    def host_message?
+    def is_host_message?
       @host_or_reply == 0
+    end
+    
+    def is_broadcast_message?
+      @thermo_address == 0
     end
     
     def thermo_reply_message?
