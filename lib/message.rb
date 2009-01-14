@@ -57,7 +57,7 @@ module HAIthermo
     
     #converts a string representing hex values into a more readable format
     def to_hex_string(data_string)
-      data_string.split(//).collect{ |s| s.unpack('H*')[0]}
+      data_string.split(//).collect{ |s| s.unpack('H*')[0]}.join(' ')
     end
     
     #pass a string with a duplet representing a hex number wiht a
