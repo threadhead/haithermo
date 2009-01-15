@@ -5,9 +5,11 @@ class TestMessage < Test::Unit::TestCase
     @message = HAIthermo::Message.new(1, 0, 1, "a")
   end
   
+  
   def test_create_new_message
     assert_instance_of(HAIthermo::Message, @message)
   end
+  
   
   def test_make_broadcast_message
     assert(!@message.is_broadcast_message?)
@@ -15,6 +17,27 @@ class TestMessage < Test::Unit::TestCase
     assert(@message.is_broadcast_message?)
   end
   
+  
+  def test_creating_a_message_packet
+    expected = @message.hex_string_to_string("01 11 61 73")
+    assert_equal(expected, @message.get_packet)
+    
+    @message = HAIthermo::Message.new(5, 1, 12, "abc")
+    expected = @message.hex_string_to_string("85 3c 61 62 63 e7")
+    assert_equal(expected, @message.get_packet)
+  end
+  
+  
+  def test_packet_validation
+    test_packet = @message.hex_string_to_string("85 3c 61 62 63 e7")
+    assert(@message.validate_packet(test_packet))
+    test_packet = @message.hex_string_to_string("82 72 3B 85 72 00 00 00 74 9A")
+    assert(@message.validate_packet(test_packet))
+    test_packet = @message.hex_string_to_string("02 21 44 64 CB")
+    assert(@message.validate_packet(test_packet))
+  end
+  
+ 
   def test_checksum_generator
     test_string = @message.hex_string_to_string("01 20 0F 03")
     assert_equal(0x33.chr, @message.generate_checksum(test_string))
@@ -24,12 +47,14 @@ class TestMessage < Test::Unit::TestCase
     assert_equal(0xfc.chr, @message.generate_checksum(test_string))
   end
   
+  
   def test_hex_string_to_string
     hex_string = "07 fc 61"
     assert_equal("\a\374a", @message.hex_string_to_string(hex_string))
     hex_string = "07 fc 45 31 00 ff"
     assert_equal("\a\374E1\000\377", @message.hex_string_to_string(hex_string))
   end
+  
   
   def test_to_hex_string
     test_string = @message.hex_string_to_string("07 fc 61")

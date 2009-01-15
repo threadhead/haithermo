@@ -13,8 +13,10 @@ module HAIthermo
     
     #assymbles and returns the message packet as a string    
     def get_packet
+      # puts "host_or_reply: " + is_host_message?.to_s
+
       packet = ""
-      packet << (@thermo_address + (host_message? ? 0b10000000 : 0b0)).chr
+      packet << (@thermo_address + (is_host_message? ? 0b10000000 : 0b0)).chr
       packet << (@message_type + @data.length * 0b10000).chr
       packet << @data
       packet << generate_checksum(packet)
@@ -32,7 +34,7 @@ module HAIthermo
     end
     
     def is_host_message?
-      @host_or_reply == 0
+      @host_or_reply == 1
     end
     
     def is_broadcast_message?
@@ -44,10 +46,9 @@ module HAIthermo
     end
     
     def validate_packet(packet)
-      checksum = packet[packet.length-1]
-      data = packet[0,packet.length-2]
-      check = packet.sum(n = 8)
-      # check = data.split(//).inject{ |sum,n| sum + n }
+      checksum = packet[packet.length-1].chr
+      data = packet[0,packet.length-1]
+      check = generate_checksum(data)
       check == checksum
     end
     
