@@ -6,5 +6,44 @@ module HAIthermo
   require 'lib/messages/set_registers'
   
   class MessageFactory
+    # the message factory is responsible for managing the creating and routing
+    # of message packets
+    
+    #breaks a packet(string) apart and assigns the attributes
+    def dissamble_packet(packet)
+      @thermo_address = packet[0] & 0b01111111
+      @host_or_reply = packet[0][7]
+      @message_type = packet[1] & 0b1111
+      @data_length = packet[1] & 0b11110000 / 0b10000
+      @data = packet[2,@data_length]
+      @checksum = packet[packet.length-1]
+      @valid = validate_packet(packet)
+    end
+    
+    
+    def validate_packet(packet)
+      checksum = packet[packet.length-1].chr
+      data = packet[0,packet.length-1]
+      check = MessageFactory.generate_checksum(data)
+      check == checksum
+    end
+    
+    
+    def self.generate_checksum(packet)
+      packet.sum(n = 8).chr
+    end
+    
+    
+    #converts a string representing hex values into a more readable format
+    def self.to_hex_string(data_string)
+      data_string.split(//).collect{ |s| s.unpack('H*')[0]}.join(' ')
+    end
+    
+
+    #pass a string with a duplet representing a hex number wiht a
+    #space separating each, i.e. "07 fc 91"
+    def self.hex_string_to_string(hex_string)
+      hex_string.split(' ').collect{ |d| d.hex.chr}.join
+    end
   end
 end
