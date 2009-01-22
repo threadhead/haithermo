@@ -4,10 +4,48 @@ module HAIthermo
   require 'lib/messages/poll_for_group1_data'
   require 'lib/messages/poll_for_group2_data'
   require 'lib/messages/set_registers'
+  require 'lib/messages/receive_ACK'
+  require 'lib/messages/receive_NACK'
+  require 'lib/messages/receive_data'
+  require 'lib/messages/receive_group1_data'
+  require 'lib/messages/receive_group2_data'
   
   class MessageFactory
     # the message factory is responsible for managing the creating and routing
     # of message packets
+    
+    def new_message(packet)
+      dissamble_packet(packet)
+      # reply messages
+      case @message_type
+      when 0
+        ReceiveACK.new(@thermo_address)
+      when 1
+        ReceiveNACK.new(@thermo_address)
+      when 2
+        ReceiveData.new(@thermo_address, @data)
+      when 3
+        ReceiveGroup1Data.new(@thermo_address, @data)
+      when 4
+        ReceiveGroup2Data.new(@thermo_address, @data)
+      end
+    end
+    
+    def poll_for_registers(thermo_address, first_register, number_of_registers)
+      PollForRegisters.new(thermo_address, first_register, number_of_registers)
+    end
+    
+    def set_registers(thermo_address, start_registers, data_bytes)
+      SetRegisters.new(@thermo_address, start_registers, data_bytes)
+    end
+    
+    def poll_for_group1_data(thermo_address)
+      PollForGroup1Data.new(@thermo_address)
+    end
+    
+    def poll_for_group2_data(thermo_address)
+      PollForGroup2Data.new(@thermo_address)
+    end
     
     #breaks a packet(string) apart and assigns the attributes
     def dissamble_packet(packet)
