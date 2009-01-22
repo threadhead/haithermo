@@ -1,5 +1,6 @@
 module HAIthermo
-  class Message
+  
+  class Message    
     def initialize(thermo_address, host_or_reply, message_type, data)
       @thermo_address = thermo_address
       @host_or_reply = host_or_reply

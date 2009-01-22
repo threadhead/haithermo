@@ -5,7 +5,7 @@ require 'pp'
 module  HAIthermo
   class Control
     require 'lib/thermostat'
-    require 'lib/message'
+    require 'lib/message_factory'
     
     #the port settings are fixed and should not be changes per HAI Thermostats API
     BAUD_RATE = 300
