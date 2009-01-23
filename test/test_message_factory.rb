@@ -71,6 +71,20 @@ class TestMessageFactory < Test::Unit::TestCase
     assert_equal(13, test_message.start_register)
     assert_equal(2, test_message.register_count)
     assert_equal(4, test_message.get_register_value(13))
+    assert_equal(5, test_message.get_register_value(14))
+  end
+  
+  
+  def test_creating_received_group1_data_message
+    test_string = @mf.hex_string_to_string("83 63 04 05 06 07 08 09 0d")
+    test_message = @msg_fac.new_incoming_message(test_string)
+    assert_kind_of(HAIthermo::ReceiveGroup1Data, test_message)
+    assert_equal(4, test_message.cool_setpoint)
+    assert_equal(5, test_message.heat_setpoint)
+    assert_equal(6, test_message.mode)
+    assert_equal(7, test_message.fan)
+    assert_equal(8, test_message.hold)
+    assert_equal(9, test_message.current_temperature)
   end
   
   

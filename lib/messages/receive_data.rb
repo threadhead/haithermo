@@ -17,9 +17,9 @@ module HAIthermo
       @data[register_number - start_register + 1]
     end
     
-    def generate_register_data
-      @register_hash = []
-      
-    end
+    # def generate_register_data
+    #   @register_hash = []
+    #   
+    # end
   end
 end
