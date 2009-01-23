@@ -88,6 +88,13 @@ class TestMessageFactory < Test::Unit::TestCase
   end
   
   
+  def test_creating_received_group2_data_message
+    test_string = @mf.hex_string_to_string("83 14 04 9b")
+    test_message = @msg_fac.new_incoming_message(test_string)
+    assert_kind_of(HAIthermo::ReceiveGroup2Data, test_message)
+  end
+  
+  
   def test_validations_on_poll_for_registers_message
     assert_raise(RuntimeError) { @msg_fac.poll_for_registers(2, 13, 15) }
     assert_raise(RuntimeError) { @msg_fac.poll_for_registers(2, 13, 0) }
