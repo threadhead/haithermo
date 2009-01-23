@@ -1,9 +1,8 @@
 module HAIthermo
   class ReceiveNACK < Message
     def initialize(thermo_address)
-      self.super(thermo_address, 1, 1, '')
-      @host_or_reply = 1
-      @message_type = 1
+      message_type = 1
+      super(thermo_address, 'reply', message_type, '')
     end
   end
 end

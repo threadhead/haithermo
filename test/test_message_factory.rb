@@ -6,6 +6,82 @@ class TestMessageFactory < Test::Unit::TestCase
     @mf = HAIthermo::MessageFactory
   end
   
+  def test_creating_poll_for_group1_data_message
+    [1,2,5].each do |thermo|
+      test_message = @msg_fac.poll_for_group1_data(thermo)
+      assert_kind_of(HAIthermo::PollForGroup1Data, test_message)
+      assert(test_message.host_message?)
+      assert_equal(thermo, test_message.thermo_address)
+      test_string = thermo.chr + 2.chr + (thermo + 2).chr
+      assert_equal(test_string, test_message.get_packet)
+    end
+  end
+  
+  
+  def test_creating_poll_for_group2_data_message
+    [1,2,5].each do |thermo|
+      test_message = @msg_fac.poll_for_group2_data(thermo)
+      assert_kind_of(HAIthermo::PollForGroup2Data, test_message)
+      assert(test_message.host_message?)
+      assert_equal(thermo, test_message.thermo_address)
+      test_string = thermo.chr + 3.chr + (thermo + 3).chr
+      assert_equal(test_string, test_message.get_packet)
+    end
+  end
+
+
+  def test_creating_set_registers_message
+    test_message = @msg_fac.set_registers(4, 13, 4.chr+7.chr+9.chr)
+    assert_kind_of(HAIthermo::SetRegisters, test_message)
+    assert_equal(4, test_message.thermo_address)
+    # puts @mf.to_hex_string test_message.get_packet
+    test_string = @mf.hex_string_to_string("04 41 0d 04 07 09 66")
+    assert_equal(test_string, test_message.get_packet)
+  end
+  
+
+  def test_creating_poll_for_registers_message
+    test_message = @msg_fac.poll_for_registers(2, 13, 3)
+    assert_kind_of(HAIthermo::PollForRegisters, test_message)
+    assert_equal(2, test_message.thermo_address)
+    # puts @mf.to_hex_string test_message.get_packet
+    test_string = @mf.hex_string_to_string("02 20 0d 03 32")
+    assert_equal(test_string, test_message.get_packet)    
+  end
+  
+  
+  def test_creating_receive_ACK_message
+    test_string = @mf.hex_string_to_string("82 00 82")
+    test_message = @msg_fac.new_incoming_message(test_string)
+    assert_kind_of(HAIthermo::ReceiveACK, test_message)
+  end
+  
+  
+  def test_creating_receive_NACK_message
+    test_string = @mf.hex_string_to_string("82 01 83")
+    test_message = @msg_fac.new_incoming_message(test_string)
+    assert_kind_of(HAIthermo::ReceiveNACK, test_message)
+  end
+  
+  
+  def test_creating_receive_data_message
+    test_string = @mf.hex_string_to_string("82 32 0d 04 05 ca")
+    test_message = @msg_fac.new_incoming_message(test_string)
+    assert_kind_of(HAIthermo::ReceiveData, test_message)
+    assert_equal(13, test_message.start_register)
+    assert_equal(2, test_message.register_count)
+    assert_equal(4, test_message.get_register_value(13))
+  end
+  
+  
+  def test_validations_on_poll_for_registers_message
+    assert_raise(RuntimeError) { @msg_fac.poll_for_registers(2, 13, 15) }
+    assert_raise(RuntimeError) { @msg_fac.poll_for_registers(2, 13, 0) }
+    assert_nothing_raised(RuntimeError) { @msg_fac.poll_for_registers(2, 13, 1) }
+    assert_nothing_raised(RuntimeError) { @msg_fac.poll_for_registers(2, 13, 14) }
+  end
+  
+  
   def test_packet_validation
     test_packet = @mf.hex_string_to_string("85 3c 61 62 63 e7")
     assert(@msg_fac.validate_packet(test_packet))
@@ -15,6 +91,7 @@ class TestMessageFactory < Test::Unit::TestCase
     assert(@msg_fac.validate_packet(test_packet))
   end
   
+  
   def test_checksum_generator
     test_string = @mf.hex_string_to_string("01 20 0F 03")
     assert_equal(0x33.chr, @mf.generate_checksum(test_string))
@@ -23,6 +100,7 @@ class TestMessageFactory < Test::Unit::TestCase
     test_string = @mf.hex_string_to_string("82 32 47 00 01")
     assert_equal(0xfc.chr, @mf.generate_checksum(test_string))
   end
+  
   
   def test_hex_string_to_string
     hex_string = "07 fc 61"

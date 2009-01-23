@@ -1,16 +1,24 @@
 module HAIthermo
   class ReceiveData < Message
     def initialize(thermo_address, data)
-      self.super(thermo_address, 1, 2, data)
-      @host_or_reply = 1
-      @message_type = 2
+      message_type = 2
+      super(thermo_address, 'reply', message_type, data)
     end
     
-    def start_register(data)
-      
+    def start_register
+      @data[0]
     end
     
-    def generage_register_data(data)
+    def register_count
+      @data.length - 1
+    end
+    
+    def get_register_value(register_number)
+      @data[register_number - start_register + 1]
+    end
+    
+    def generate_register_data
+      @register_hash = []
       
     end
   end

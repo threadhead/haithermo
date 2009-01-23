@@ -14,20 +14,24 @@ module HAIthermo
     # the message factory is responsible for managing the creating and routing
     # of message packets
     
-    def new_message(packet)
+    def new_incoming_message(packet)
       dissamble_packet(packet)
-      # reply messages
-      case @message_type
-      when 0
-        ReceiveACK.new(@thermo_address)
-      when 1
-        ReceiveNACK.new(@thermo_address)
-      when 2
-        ReceiveData.new(@thermo_address, @data)
-      when 3
-        ReceiveGroup1Data.new(@thermo_address, @data)
-      when 4
-        ReceiveGroup2Data.new(@thermo_address, @data)
+      
+      if @valid
+        case @message_type
+        when 0
+          ReceiveACK.new(@thermo_address)
+        when 1
+          ReceiveNACK.new(@thermo_address)
+        when 2
+          ReceiveData.new(@thermo_address, @data)
+        when 3
+          ReceiveGroup1Data.new(@thermo_address, @data)
+        when 4
+          ReceiveGroup2Data.new(@thermo_address, @data)
+        end
+      else
+        raise 'packet checksum did not validate'
       end
     end
     
@@ -35,16 +39,16 @@ module HAIthermo
       PollForRegisters.new(thermo_address, first_register, number_of_registers)
     end
     
-    def set_registers(thermo_address, start_registers, data_bytes)
-      SetRegisters.new(@thermo_address, start_registers, data_bytes)
+    def set_registers(thermo_address, start_register, data_bytes)
+      SetRegisters.new(thermo_address, start_register, data_bytes)
     end
     
     def poll_for_group1_data(thermo_address)
-      PollForGroup1Data.new(@thermo_address)
+      PollForGroup1Data.new(thermo_address)
     end
     
     def poll_for_group2_data(thermo_address)
-      PollForGroup2Data.new(@thermo_address)
+      PollForGroup2Data.new(thermo_address)
     end
     
     #breaks a packet(string) apart and assigns the attributes
@@ -52,7 +56,7 @@ module HAIthermo
       @thermo_address = packet[0] & 0b01111111
       @host_or_reply = packet[0][7]
       @message_type = packet[1] & 0b1111
-      @data_length = packet[1] & 0b11110000 / 0b10000
+      @data_length = (packet[1] & 0b11110000) / 0b10000
       @data = packet[2,@data_length]
       @checksum = packet[packet.length-1]
       @valid = validate_packet(packet)
