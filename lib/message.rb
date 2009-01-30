@@ -18,7 +18,7 @@ module HAIthermo
     def get_packet
       packet = ""
       packet << (@thermo_address + (host_message? ? 0b0 : 0b10000000)).chr
-      packet << (@message_type + @data.length * 0b10000).chr
+      packet << (@message_type + (@data.length * 0b10000)).chr
       packet << @data
       packet << HAIthermo::MessageFactory.generate_checksum(packet)
     end
@@ -32,7 +32,6 @@ module HAIthermo
       @host_or_reply != 'host'
     end
     
-
     def broadcast_message?
       @thermo_address == 0
     end

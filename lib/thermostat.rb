@@ -17,6 +17,10 @@ module HAIthermo
       init_register_hash
     end
     
+    def update_basic_stats
+      # requests groupt 1 data
+    end
+    
     
     
     def add_schedule(day_of_week, time_of_day, set_time, cool_setpoint, heat_setpoint)
