@@ -4,10 +4,17 @@ require 'serialport'
 # Kernel::require 'serialport'
 
 
+begin
+  require 'serialport'
+rescue
+    Kernel::require 'serialport'
+end
+
 module  HAIthermo
+  require 'lib/timestamp_attribute'
   require 'lib/thermostat'
   require 'lib/message_factory'
-
+  
   class Control
     
     #the port settings are fixed and should not be changes per HAI Thermostats API
