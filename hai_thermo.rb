@@ -1,4 +1,4 @@
-$:.unshift File.dirname(__FILE__)
+# $:.unshift File.dirname(__FILE__)
 
 module  HAIthermo
   # attr_reader :debug

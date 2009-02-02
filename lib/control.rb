@@ -1,6 +1,8 @@
-# require 'serialport'
-Kernel::require "serialport"
+require 'rubygems'
 require 'pp'
+require 'serialport'
+# Kernel::require 'serialport'
+
 
 module  HAIthermo
   require 'lib/thermostat'
