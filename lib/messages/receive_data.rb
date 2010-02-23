@@ -6,7 +6,7 @@ module HAIthermo
     end
     
     def start_register
-      @data[0]
+      @data.getbyte(0)
     end
     
     def register_count
@@ -14,7 +14,7 @@ module HAIthermo
     end
     
     def get_register_value(register_number)
-      @data[register_number - start_register + 1]
+      @data.getbyte( register_number - start_register + 1 )
     end
     
     # def generate_register_data

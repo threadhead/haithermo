@@ -10,12 +10,15 @@ module HAIthermo
   require 'lib/messages/receive_group1_data'
   require 'lib/messages/receive_group2_data'
   
+  require 'ruby-debug'
+  
   class MessageFactory
     # the message factory is responsible for managing the creating and routing
     # of message packets
     
     def new_incoming_message(packet)
       dissamble_packet(packet)
+      # puts "valid: #{@valid}, mt: #{@message_type}"
       
       if @valid
         case @message_type
@@ -53,10 +56,13 @@ module HAIthermo
     
     #breaks a packet(string) apart and assigns the attributes
     def dissamble_packet(packet)
-      @thermo_address = packet[0] & 0b01111111
-      @host_or_reply = packet[0][7]
-      @message_type = packet[1] & 0b1111
-      @data_length = (packet[1] & 0b11110000) / 0b10000
+      
+      packet_bytes = packet.bytes.to_a
+      # debugger
+      @thermo_address = packet_bytes[0] & 0b01111111
+      @host_or_reply = packet_bytes[0][7]
+      @message_type = packet_bytes[1] & 0b1111
+      @data_length = (packet_bytes[1] & 0b11110000) / 0b10000
       @data = packet[2,@data_length]
       @checksum = packet[packet.length-1]
       @valid = validate_packet(packet)

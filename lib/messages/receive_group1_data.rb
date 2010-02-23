@@ -8,15 +8,15 @@ module HAIthermo
     # cool setpoint, heat setpoint, mode, fan, hold, current temperature
     
     def cool_setpoint
-      @data[0]
+      @data.getbyte(0)
     end
     
     def heat_setpoint
-      @data[1]
+      @data.getbyte(1)
     end
     
     def mode
-      @data[2]
+      @data.getbyte(2)
     end
     
     def mode_string
@@ -36,7 +36,7 @@ module HAIthermo
     end
     
     def fan
-      @data[3]
+      @data.getbyte(3)
     end
     
     def fan_string
@@ -49,7 +49,7 @@ module HAIthermo
     end
     
     def hold
-      @data[4]
+      @data.getbyte(4)
     end
     
     def hold_string
@@ -62,7 +62,7 @@ module HAIthermo
     end
     
     def current_temperature
-      @data[5]
+      @data.getbyte(5)
     end
   end
 end
