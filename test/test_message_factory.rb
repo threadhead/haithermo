@@ -13,7 +13,7 @@ class TestMessageFactory < Test::Unit::TestCase
       assert(test_message.host_message?)
       assert_equal(thermo, test_message.thermo_address)
       test_string = thermo.chr + 2.chr + (thermo + 2).chr
-      assert_equal(test_string, test_message.get_packet)
+      assert_equal(test_string, test_message.assemble_packet)
     end
   end
   
@@ -25,7 +25,7 @@ class TestMessageFactory < Test::Unit::TestCase
       assert(test_message.host_message?)
       assert_equal(thermo, test_message.thermo_address)
       test_string = thermo.chr + 3.chr + (thermo + 3).chr
-      assert_equal(test_string, test_message.get_packet)
+      assert_equal(test_string, test_message.assemble_packet)
     end
   end
 
@@ -34,9 +34,9 @@ class TestMessageFactory < Test::Unit::TestCase
     test_message = @msg_fac.set_registers(4, 13, 4.chr+7.chr+9.chr)
     assert_kind_of(HAIthermo::SetRegisters, test_message)
     assert_equal(4, test_message.thermo_address)
-    # puts @mf.to_hex_string test_message.get_packet
+    # puts @mf.to_hex_string test_message.assemble_packet
     test_string = @mf.hex_string_to_string("04 41 0d 04 07 09 66")
-    assert_equal(test_string, test_message.get_packet)
+    assert_equal(test_string, test_message.assemble_packet)
   end
   
 
@@ -44,9 +44,9 @@ class TestMessageFactory < Test::Unit::TestCase
     test_message = @msg_fac.poll_for_registers(2, 13, 3)
     assert_kind_of(HAIthermo::PollForRegisters, test_message)
     assert_equal(2, test_message.thermo_address)
-    # puts @mf.to_hex_string test_message.get_packet
+    # puts @mf.to_hex_string test_message.assemble_packet
     test_string = @mf.hex_string_to_string("02 20 0d 03 32")
-    assert_equal(test_string, test_message.get_packet)    
+    assert_equal(test_string, test_message.assemble_packet)    
   end
   
   

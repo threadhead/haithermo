@@ -1,5 +1,5 @@
 module HAIthermo
-  class ReceiveData < Message
+  class ReceiveData < Message::Base
     def initialize(thermo_address, data)
       message_type = 2
       super(thermo_address, 'reply', message_type, data)

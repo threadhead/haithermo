@@ -42,15 +42,15 @@ module  HAIthermo
 
 
     def add_thermostat(address)
-      @thermostats << HAIthermo::Thermostat::Base.new(address)
+      @thermostats << HAIthermo::Thermostat::Base.new(self, address)
     end
     
     def get_thermostat(address)
-      @thermostats.detect{ |t| t.address == address }
+      @thermostats.detect{ |thermo| thermo.address == address }
     end
     
     def destroy_thermostat(address)
-      @thermostats.delete_if{ |t| t.address == address }
+      @thermostats.delete_if{ |thermo| thermo.address == address }
     end
 
 

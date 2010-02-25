@@ -1,5 +1,5 @@
 module HAIthermo
-  require 'lib/message'
+  require 'lib/messages/base'
   require 'lib/messages/poll_for_registers'
   require 'lib/messages/poll_for_group1_data'
   require 'lib/messages/poll_for_group2_data'
@@ -54,9 +54,9 @@ module HAIthermo
       PollForGroup2Data.new(thermo_address)
     end
     
+    
     #breaks a packet(string) apart and assigns the attributes
     def dissamble_packet(packet)
-      
       packet_bytes = packet.bytes.to_a
       # debugger
       @thermo_address = packet_bytes[0] & 0b01111111

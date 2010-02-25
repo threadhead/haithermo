@@ -7,7 +7,8 @@ module HAIthermo
     class BaseError < StandardError; end
   
     class Base
-      def initialize(address)
+      def initialize(my_control, address)
+        @my_control = my_control
         @registers = HAIthermo::Thermostat::Register.new(address)
         @schedules = []
       end
@@ -17,15 +18,38 @@ module HAIthermo
         @registers.get_value(0)
       end
       
-      def method_name
-        
+      def get_filter_and_runtimes
+        @my_control.send( PollForRegisters.new( self.address, 0x0F, 3 ).assemble_packet )
+        @my_control.read
       end
-      def update_basic_stats
-        # requests groupt 1 data
+
+      def get_setpoints
+        @my_control.send PollForRegisters.new( self.address, 0x3B, 6 ).assemble_packet
+        @my_control.read
+      end
+      
+      def get_mode_status
+        @my_control.send PollForRegisters.new( self.address, 0x47, 2 ).assemble_packet
+        @my_control.read
+      end
+      
+      def get_display_options
+        @my_control.send PollForRegisters.new( self.address, 0x03, 1 ).assemble_packet
+        @my_control.read
+      end
+      
+      def set_outside_temp_c(temp_c)
+        @my_control.send SetRegisters.new( self.address, 0x44, self.c_to_omnistat( temp_c )).assemble_packet
       end
     
-    
-    
+      def set_outside_temp_f(temp_f)
+        self.set_outside_temp_c( self.f_to_c( temp_f ))
+      end
+
+
+
+
+
       def add_schedule(day_of_week, time_of_day, set_time, cool_setpoint, heat_setpoint)
         @schedules << ThermostatSchedule.new(day_of_week, time_of_day, set_time, cool_setpoint, heat_setpoint)
       end
@@ -36,16 +60,6 @@ module HAIthermo
     
       def destroy_schedule(day_of_week, time_of_day)
         @schedules.delete_if{ |s| s.day_of_week == day_of_week && s.time_of_day == time_of_day }
-      end
-    
-    
-    
-      def set_register_value(register, value)
-        self.instance_variable_set( "@#{@registers[register.to_s]}", value )
-      end
-
-      def get_register_value(register)
-        self.instance_variable_get( "@#{@registers[register.to_s]}" )
       end
     
     
@@ -67,12 +81,20 @@ module HAIthermo
 
 
     
-      def self.to_c(omnistat_temp)
-        -40.0 + ( omnistat_temp * 0.5 )
+      def omnistat_to_c(temp_o)
+        -40.0 + ( temp_o * 0.5 )
       end
-    
-      def self.to_f(omnistat_temp)
-        32 + ( 9.0 / 5 ) * omnistat_temp.to_c      
+
+      def c_to_omnistat(temp_c)
+        ( temp_c + 40 ) * 2
+      end
+            
+      def f_to_c(temp_f)
+        ( temp_f - 32 ) * 5 / 9.0
+      end
+      
+      def c_to_f(temp_c)
+        ( 9.0 / 5 * temp_c ) + 32.0
       end
     
 
