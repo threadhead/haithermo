@@ -14,11 +14,37 @@ module HAIthermo
         @registers[register][:value] = value
         @registers[register][:updated_at] = Time.new
       end
-    
       
+      def set_value_range(start_register, values)
+        start_register -= 1
+        values.each do |value|
+          self.set_value( start_register += 1, value )
+        end
+      end
+      
+      def set_value_range_string(string)
+        string_bytes = string.bytes.to_a
+        self.set_value_range( string_bytes[0], string_bytes[1, 100])
+      end
+          
       def get_value(register)
         self.validate_register_range(register)
         @registers[register][:value]
+      end
+      
+      def get_value_range(start_register, quantity)
+        start_register -= 1
+        arr = []
+        quantity.times do
+          arr << self.get_value( start_register += 1 )
+        end
+        arr
+      end
+      
+      def get_value_range_string(start_register, quantity)
+        str = start_register.chr
+        self.get_value_range(start_register, quantity).each{ |value| str << value.chr }
+        str
       end
       
       

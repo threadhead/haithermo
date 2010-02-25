@@ -19,15 +19,15 @@ class TestThermostat < Test::Unit::TestCase
     assert_nothing_raised(HAIthermo::Thermostat::RegisterError) { @control.add_thermostat(127) }
   end
   
-  # def test_add_three_thermostats_and_get_each
-  #   thermostats = @control.add_thermostat(2)
-  #   thermostats = @control.add_thermostat(4)
-  #   thermostats = @control.add_thermostat(1)
-  #   
-  #   assert_equal 2, @control.get_thermostat(2).address
-  #   assert_equal 4, @control.get_thermostat(4).address
-  #   assert_equal 1, @control.get_thermostat(1).address
-  # end
+  def test_add_three_thermostats_and_get_each
+    thermostats = @control.add_thermostat(2)
+    thermostats = @control.add_thermostat(4)
+    thermostats = @control.add_thermostat(1)
+    
+    assert_equal 2, @control.get_thermostat(2).address
+    assert_equal 4, @control.get_thermostat(4).address
+    assert_equal 1, @control.get_thermostat(1).address
+  end
   
   def test_destroy_thermostat
     @control.add_thermostat(1)
@@ -37,18 +37,4 @@ class TestThermostat < Test::Unit::TestCase
     assert_equal 3, @control.get_thermostat(3).address
     assert_nil @control.get_thermostat(1)
   end
-  
-  # def test_set_register_value
-  #   @control.add_thermostat(1)
-  #   thermo = @control.get_thermostat(1)
-  #   thermo.set_register_value(4, 55)
-  #   assert_equal(55, thermo.calibration_offset)
-  # end
-
-  # def test_get_register_value
-  #   @control.add_thermostat(1)
-  #   thermo = @control.get_thermostat(1)
-  #   thermo.calibration_offset = 44
-  #   assert_equal(44, thermo.get_register_value(4))
-  # end
-end
+  end

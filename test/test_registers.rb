@@ -43,6 +43,42 @@ class TestRegisters < Test::Unit::TestCase
     assert_equal(1, @registers.get_value(1))
   end
   
+  def test_setting_register_range
+    @registers.set_value_range(21, [5, 6, 7])
+    assert_equal(5, @registers.get_value(21))
+    assert_equal(6, @registers.get_value(22))
+    assert_equal(7, @registers.get_value(23))
+  end
+  
+  def test_setting_register_range_string
+    @registers.set_value_range_string(21.chr + "\005\006\007")
+    assert_equal(5, @registers.get_value(21))
+    assert_equal(6, @registers.get_value(22))
+    assert_equal(7, @registers.get_value(23))
+    @registers.set_value_range_string(24.chr+12.chr+16.chr+27.chr+33.chr)
+    assert_equal(12, @registers.get_value(24))
+    assert_equal(16, @registers.get_value(25))
+    assert_equal(27, @registers.get_value(26))
+    assert_equal(33, @registers.get_value(27))
+  end
+  
+  def test_getting_register_range
+    @registers.set_value_range(21, [5, 6, 7])
+    assert_equal([5, 6, 7], @registers.get_value_range(21, 3))
+    @registers.set_value_range(24, [12, 16, 27, 33])
+    assert_equal([12, 16, 27, 33], @registers.get_value_range(24, 4))
+  end
+  
+  def test_getting_register_range_string
+    @registers.set_value_range(21, [5, 6, 7])
+    assert_equal(21.chr + "\005\006\007", @registers.get_value_range_string(21, 3))
+    assert_equal(4, @registers.get_value_range_string(21, 3).length)
+    
+    @registers.set_value_range(24, [12, 16, 27, 33])
+    assert_equal(24.chr+12.chr+16.chr+27.chr+33.chr, @registers.get_value_range_string(24, 4))
+    assert_equal(5, @registers.get_value_range_string(24, 4).length)    
+  end
+  
   def test_getting_a_register_name
     assert_equal("Address", @registers.get_name(0))
     assert_equal("Communication Mode", @registers.get_name(1))

@@ -17,7 +17,9 @@ module HAIthermo
         @registers.get_value(0)
       end
       
-      
+      def method_name
+        
+      end
       def update_basic_stats
         # requests groupt 1 data
       end
@@ -25,7 +27,7 @@ module HAIthermo
     
     
       def add_schedule(day_of_week, time_of_day, set_time, cool_setpoint, heat_setpoint)
-        @schedules << ThermostatSchedule.new(day_of_week, time_of_day, set-time, cool_setpoint, heat_setpoint)
+        @schedules << ThermostatSchedule.new(day_of_week, time_of_day, set_time, cool_setpoint, heat_setpoint)
       end
     
       def get_schedule(day_of_week, time_of_day)
