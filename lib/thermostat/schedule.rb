@@ -1,9 +1,9 @@
 module HAIthermo
   module Thermostat
-    class Schedule < Thermostat
+    class Schedule
       attr_accessor :day_of_week, :time_of_day, :set_time, :cool_setpoint, :heat_setpoint
     
-      def initialize(day_of_week, time_of_day, set-time, cool_setpoint, heat_setpoint)
+      def initialize(day_of_week, time_of_day, set_time, cool_setpoint, heat_setpoint)
       @days_of_week = %w( weekday saturday sunday )
       @times_of_day = %w( morning day evening night )
     

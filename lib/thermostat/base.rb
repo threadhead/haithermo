@@ -4,7 +4,7 @@ require 'lib/thermostat/timestamp_attribute'
 
 module HAIthermo
   module Thermostat
-    class ThermostatError < StandardError; end
+    class BaseError < StandardError; end
   
     class Base
       # extend HAIthermo::TimestampAttribute
@@ -17,13 +17,17 @@ module HAIthermo
       #       attr_timestamped :actual_temp, :seconds, :minutes, :hours, :outside_temp
 
       def initialize(address)
-        raise ThermostatError.new("thermo address must be 1..127") unless (1..127) === address
         @registers = HAIthermo::Thermostat::Register.new(address)
-        @address = address
         @schedules = []
-        init_register_hash
+        # init_register_hash
       end
     
+    
+      def address
+        @registers.get_value(0)
+      end
+      
+      
       def update_basic_stats
         # requests groupt 1 data
       end

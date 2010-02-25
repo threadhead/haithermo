@@ -1,10 +1,11 @@
 module HAIthermo
   module Thermostat
-    class ThermostatRegisterError < StandardError; end
+    class RegisterError < StandardError; end
   
     class Register
       def initialize(address)
-        set_register(0, address)
+        initialize_registers
+        set_value(0, address)
       end
     
     
@@ -17,34 +18,35 @@ module HAIthermo
       
       def get_value(register)
         self.validate_register_range(register)
-        @register[register][:value]
+        @registers[register][:value]
       end
       
       
       def get_name(register)
         self.validate_register_range(register)
-        self.humanize( @register[register][:name] )
+        self.humanize( @registers[register][:name] )
       end
       
       
       def get_updated_at(register)
         self.validate_register_range(register)
-        @register[register][:updated_at]
+        @registers[register][:updated_at]
       end
     
     
       def validate_register_limits(register, value)
         self.validate_register_range(register)
-      
-        if @registers[register][:limits].include?( value )
-          raise ThermostatRegisterError.new("value not within allowable register range")
+        
+        limits = @registers[register][:limits]
+        unless limits.include?( value )
+          raise RegisterError.new("register '#{self.get_name(register)}' not within allowable value range #{limits}")
         end      
       end
       
       
       def validate_register_range(register)
         if register < 0 || register > ( @registers.size - 1 )
-          raise ThermostatRegisterError.new("register '#{register}' is not a valid register")
+          raise RegisterError.new("register '#{register}' is not a valid register")
         end
       end
       
@@ -59,7 +61,7 @@ module HAIthermo
       private
       def initialize_registers
         @registers = [
-                      { :name => 'address', :limits => (0..127) },
+                      { :name => 'address', :limits => (1..127) },
                       { :name => 'communication_mode', :limits => [0, 1, 8, 24] },
                       { :name => 'system_options', :limits => (0..127) },
                       { :name => 'display_options', :limits => (0..127) },
@@ -144,7 +146,7 @@ module HAIthermo
                       { :name => 'model_of_thermostat', :limits => (0..255) }
                       ]
         timestamp = Time.new
-        @registers.each |reg| do
+        @registers.each do |reg|
           reg.merge!({ :value => 0, :updated_at => timestamp })
         end
       end
