@@ -7,19 +7,9 @@ module HAIthermo
     class BaseError < StandardError; end
   
     class Base
-      # extend HAIthermo::TimestampAttribute
-      # attr_timestamped :address, :model
-      #       attr_timestamped :calibration_offset, :cool_setpoint_low_limit, :heat_setpoint_high_limit
-      #       attr_timestamped :cooling_anticipator, :heating_anticipator
-      #       attr_timestamped :cooling_cycle_time, :heating_cycle_time, :aux_heat_differential
-      #       attr_timestamped :clock_adjust, :days_to_filter_reminder, :runtime_current_week, :runtime_last_week
-      #       attr_timestamped :day_of_week, :cool_setpoint, :heat_setpoint, :mode, :fan_status, :hold
-      #       attr_timestamped :actual_temp, :seconds, :minutes, :hours, :outside_temp
-
       def initialize(address)
         @registers = HAIthermo::Thermostat::Register.new(address)
         @schedules = []
-        # init_register_hash
       end
     
     
@@ -83,20 +73,6 @@ module HAIthermo
         32 + ( 9.0 / 5 ) * omnistat_temp.to_c      
       end
     
-      def init_register_hash
-        # attr_reader :address, :model
-        #    attr_accessor :calibration_offset, :cool_setpoint_low_limit, :heat_setpoint_high_limit
-        #    attr_accessor :cooling_anticipator, :heating_anticipator
-        #    attr_accessor :cooling_cycle_time, :heating_cycle_time, :aux_heat_differential
-        #    attr_accessor :clock_adjust, :days_to_filter_reminder, :runtime_current_week, :runtime_last_week
-        #    attr_accessor :day_of_week, :cool_setpoint, :heat_setpoint, :mode, :fan_status, :hold
-        #    attr_accessor :actual_temp, :seconds, :minutes, :hours, :outside_temp
-        # 
-        @registers = {
-          '0' => :address,
-          '4'  => :calibration_offset
-        }
-      end
 
     end
   end

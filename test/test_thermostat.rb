@@ -32,7 +32,7 @@ class TestThermostat < Test::Unit::TestCase
   def test_destroy_thermostat
     @control.add_thermostat(1)
     @control.add_thermostat(3)
-    # 
+    
     @control.destroy_thermostat(1)
     assert_equal 3, @control.get_thermostat(3).address
     assert_nil @control.get_thermostat(1)
