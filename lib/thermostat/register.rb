@@ -20,9 +20,16 @@ module HAIthermo
         @register[register][:value]
       end
       
-      def get_register_name(register)
+      
+      def get_name(register)
         self.validate_register_range(register)
         self.humanize( @register[register][:name] )
+      end
+      
+      
+      def get_updated_at(register)
+        self.validate_register_range(register)
+        @register[register][:updated_at]
       end
     
     
@@ -35,11 +42,12 @@ module HAIthermo
       end
       
       
-      def validate_register_ragne(register)
+      def validate_register_range(register)
         if register < 0 || register > ( @registers.size - 1 )
           raise ThermostatRegisterError.new("register '#{register}' is not a valid register")
         end
       end
+      
       
       # sorta from ActiveSupport
       def humanize(string)
