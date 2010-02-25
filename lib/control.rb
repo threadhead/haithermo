@@ -11,7 +11,6 @@ rescue
 end
 
 module  HAIthermo
-  require 'lib/timestamp_attribute'
   require 'lib/thermostat'
   require 'lib/message_factory'
   
@@ -43,7 +42,7 @@ module  HAIthermo
 
 
     def add_thermostat(address)
-      @thermostats << Thermostat.new(address)
+      @thermostats << HAIthermo::Thermostat::Base.new(address)
     end
     
     def get_thermostat(address)
@@ -86,23 +85,23 @@ module  HAIthermo
       @debug = false
     end
 
-    module ClassMethods
-      # def acts_as_commentable
-      #   include Juixe::Acts::Commentable::InstanceMethods
-      #   extend Juixe::Acts::Commentable::SingletonMethods
-      # end
-    end
-
-    module SingletonMethods
-      #add clss methods here
-    end
-
-    module InstanceMethods
-      # Add instance methods here
-    end
-
-    def self.included(base)
-      base.extend ClassMethods
-    end
+    # module ClassMethods
+    #      # def acts_as_commentable
+    #      #   include Juixe::Acts::Commentable::InstanceMethods
+    #      #   extend Juixe::Acts::Commentable::SingletonMethods
+    #      # end
+    #    end
+    # 
+    #    module SingletonMethods
+    #      #add clss methods here
+    #    end
+    # 
+    #    module InstanceMethods
+    #      # Add instance methods here
+    #    end
+    # 
+    #    def self.included(base)
+    #      base.extend ClassMethods
+    #    end
   end
 end
