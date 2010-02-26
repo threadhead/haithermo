@@ -18,36 +18,54 @@ module HAIthermo
         @registers.get_value(0)
       end
       
+
+
       def get_filter_and_runtimes
         @my_control.send( PollForRegisters.new( self.address, 0x0F, 3 ).assemble_packet )
         @my_control.read
       end
 
       def get_setpoints
-        @my_control.send PollForRegisters.new( self.address, 0x3B, 6 ).assemble_packet
+        @my_control.send( PollForRegisters.new( self.address, 0x3B, 6 ).assemble_packet )
         @my_control.read
       end
       
       def get_mode_status
-        @my_control.send PollForRegisters.new( self.address, 0x47, 2 ).assemble_packet
+        @my_control.send( PollForRegisters.new( self.address, 0x47, 2 ).assemble_packet )
         @my_control.read
       end
       
       def get_display_options
-        @my_control.send PollForRegisters.new( self.address, 0x03, 1 ).assemble_packet
+        @my_control.send( PollForRegisters.new( self.address, 0x03, 1 ).assemble_packet )
         @my_control.read
       end
+      
+      def get_model
+        @my_control.send( PollForRegisters.new( self.address, 0x49, 1 ).assemble_packet )
+        @my_control.read
+      end
+      
+      def get_limits
+        @my_control.send( PollForRegisters.new( self.address, 0x05, 2 ).assemble_packet )
+        @my_control.read        
+      end
+
+
+
       
       def set_outside_temp_c(temp_c)
         @my_control.send SetRegisters.new( self.address, 0x44, self.c_to_omnistat( temp_c )).assemble_packet
       end
-    
+
       def set_outside_temp_f(temp_f)
         self.set_outside_temp_c( self.f_to_c( temp_f ))
       end
 
-
-
+      def set_time
+        time = Time.now
+        hours, minutes, seconds = time.hour.chr, time.min.chr, time.sec.chr
+        @my_control.send( SetRegisters.new( self.address, 0x41, seconds + minutes + hours))
+      end
 
 
       def add_schedule(day_of_week, time_of_day, set_time, cool_setpoint, heat_setpoint)

@@ -1,16 +1,16 @@
+require 'lib/messages/base'
+require 'lib/messages/poll_for_registers'
+require 'lib/messages/poll_for_group1_data'
+require 'lib/messages/poll_for_group2_data'
+require 'lib/messages/set_registers'
+require 'lib/messages/receive_ACK'
+require 'lib/messages/receive_NACK'
+require 'lib/messages/receive_data'
+require 'lib/messages/receive_group1_data'
+require 'lib/messages/receive_group2_data'
+
 module HAIthermo
-  require 'lib/messages/base'
-  require 'lib/messages/poll_for_registers'
-  require 'lib/messages/poll_for_group1_data'
-  require 'lib/messages/poll_for_group2_data'
-  require 'lib/messages/set_registers'
-  require 'lib/messages/receive_ACK'
-  require 'lib/messages/receive_NACK'
-  require 'lib/messages/receive_data'
-  require 'lib/messages/receive_group1_data'
-  require 'lib/messages/receive_group2_data'
-  
-  require 'ruby-debug'
+  # require 'ruby-debug'
   
   class MessageFactory
     # the message factory is responsible for managing the creating and routing

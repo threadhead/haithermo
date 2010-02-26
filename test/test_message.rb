@@ -4,8 +4,6 @@ class TestMessage < Test::Unit::TestCase
   def setup
     @message = HAIthermo::Message::Base.new(1, 'host', 1, "a")
     @mf = HAIthermo::MessageFactory
-    @f = 68.0
-    @c = 20.0
   end
   
   
