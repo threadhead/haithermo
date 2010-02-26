@@ -21,35 +21,33 @@ module HAIthermo
 
 
       def get_filter_and_runtimes
-        @my_control.send( PollForRegisters.new( self.address, 0x0F, 3 ).assemble_packet )
-        @my_control.read
+        self.get_registers( 0x0F, 3 )
       end
 
       def get_setpoints
-        @my_control.send( PollForRegisters.new( self.address, 0x3B, 6 ).assemble_packet )
-        @my_control.read
+        self.get_registers( 0x3B, 6 )
       end
       
       def get_mode_status
-        @my_control.send( PollForRegisters.new( self.address, 0x47, 2 ).assemble_packet )
-        @my_control.read
+        self.get_registers( 0x47, 2 )
       end
       
       def get_display_options
-        @my_control.send( PollForRegisters.new( self.address, 0x03, 1 ).assemble_packet )
-        @my_control.read
+        self.get_registers( 0x03, 1 )
       end
       
       def get_model
-        @my_control.send( PollForRegisters.new( self.address, 0x49, 1 ).assemble_packet )
-        @my_control.read
+        self.get_registers( 0x49, 1 )
       end
       
       def get_limits
-        @my_control.send( PollForRegisters.new( self.address, 0x05, 2 ).assemble_packet )
-        @my_control.read        
+        self.get_registers( 0x05, 2 )
       end
 
+      def get_registers( start_register, quantity)
+        @my_control.send( PollForRegisters.new( self.address, start_register, quantity ).assemble_packet )
+        @my_control.read
+      end
 
 
       
@@ -64,8 +62,35 @@ module HAIthermo
       def set_time
         time = Time.now
         hours, minutes, seconds = time.hour.chr, time.min.chr, time.sec.chr
-        @my_control.send( SetRegisters.new( self.address, 0x41, seconds + minutes + hours))
+        @my_control.send( SetRegisters.new( self.address, 0x41, seconds + minutes + hours ))
       end
+      
+      def display_fahrenheit
+        @registers.set_value( 0x03, ( self.bit_set( @registers.get_value( 0x03 ), 0 )))
+      end
+
+      def display_celsius
+        @registers.set_value( 0x03, ( self.bit_clear( @registers.get_value( 0x03 ), 0 )))
+      end
+      
+      def disply_24h
+        @registers.set_value( 0x03, ( self.bit_set( @registers.get_value( 0x03 ), 1 )))
+      end
+      
+      def display_ampm
+        @registers.set_value( 0x03, ( self.bit_clear( @registers.get_value( 0x03 ), 1 )))
+      end
+      
+      def display_hide_time_filter
+        @registers.set_value( 0x03, ( self.bit_set( @registers.get_value( 0x03 ), 4 )))
+      end
+
+      def display_show_time_filer
+        @registers.set_value( 0x03, ( self.bit_clear( @registers.get_value( 0x03 ), 4 )))
+      end
+
+
+
 
 
       def add_schedule(day_of_week, time_of_day, set_time, cool_setpoint, heat_setpoint)
@@ -82,8 +107,8 @@ module HAIthermo
     
     
     
-      def get_model_name
-        case self.model
+      def model_name
+        case @registers.get_value( 0x49 )
         when 0 then "RC-80"
         when 1 then "RC-81"
         when 8 then "RC-90"
@@ -115,6 +140,13 @@ module HAIthermo
         ( 9.0 / 5 * temp_c ) + 32.0
       end
     
+      def bit_set(byte, bit_to_set)
+        byte | ( 2 ** bit_to_set )
+      end
+      
+      def bit_clear(byte, bit_to_clear)
+        byte & ((2 ** bit_to_clear) ^ 0b11111111)
+      end
 
     end
   end
