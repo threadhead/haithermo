@@ -1,13 +1,17 @@
 require 'lib/thermostat/register'
 require 'lib/thermostat/schedule'
 require 'lib/thermostat/timestamp_attribute'
-require 'lib/thermostat/fixnum_bits'
+require 'lib/thermostat/display_options'
+require 'lib/thermostat/output_status'
 
 module HAIthermo
   module Thermostat
     class BaseError < StandardError; end
   
     class Base
+      extend HAIthermo::Thermostat::DisplayOptions
+      extend HAIthermo::Thermostat::OutputStatus
+      
       def initialize(my_control, address)
         @my_control = my_control
         @registers = HAIthermo::Thermostat::Register.new(address)
@@ -66,31 +70,6 @@ module HAIthermo
         @my_control.send( SetRegisters.new( self.address, 0x41, seconds + minutes + hours ))
       end
       
-      def display_fahrenheit
-        @registers.set_value( 0x03, ( @registers.get_value( 0x03 ).bit_set( 0 ) ))
-      end
-
-      def display_celsius
-        @registers.set_value( 0x03, ( @registers.get_value( 0x03 ).bit_clear( 0 ) ))
-      end
-      
-      def disply_24h
-        @registers.set_value( 0x03, ( @registers.get_value( 0x03 ).bit_set( 1 ) ))
-      end
-      
-      def display_ampm
-        @registers.set_value( 0x03, ( @registers.get_value( 0x03 ).bit_set( 1 ) ))
-      end
-      
-      def display_hide_time_filter
-        @registers.set_value( 0x03, ( @registers.get_value( 0x03 ).bit_set( 4 ) ))
-      end
-
-      def display_show_time_filer
-        @registers.set_value( 0x03, ( @registers.get_value( 0x03 ).bit_clear( 4 ) ))
-      end
-
-
 
 
 
