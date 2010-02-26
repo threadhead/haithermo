@@ -1,6 +1,7 @@
 require 'lib/thermostat/register'
 require 'lib/thermostat/schedule'
 require 'lib/thermostat/timestamp_attribute'
+require 'lib/thermostat/fixnum_bits'
 
 module HAIthermo
   module Thermostat
@@ -66,27 +67,27 @@ module HAIthermo
       end
       
       def display_fahrenheit
-        @registers.set_value( 0x03, ( self.bit_set( @registers.get_value( 0x03 ), 0 )))
+        @registers.set_value( 0x03, ( @registers.get_value( 0x03 ).bit_set( 0 ) ))
       end
 
       def display_celsius
-        @registers.set_value( 0x03, ( self.bit_clear( @registers.get_value( 0x03 ), 0 )))
+        @registers.set_value( 0x03, ( @registers.get_value( 0x03 ).bit_clear( 0 ) ))
       end
       
       def disply_24h
-        @registers.set_value( 0x03, ( self.bit_set( @registers.get_value( 0x03 ), 1 )))
+        @registers.set_value( 0x03, ( @registers.get_value( 0x03 ).bit_set( 1 ) ))
       end
       
       def display_ampm
-        @registers.set_value( 0x03, ( self.bit_clear( @registers.get_value( 0x03 ), 1 )))
+        @registers.set_value( 0x03, ( @registers.get_value( 0x03 ).bit_set( 1 ) ))
       end
       
       def display_hide_time_filter
-        @registers.set_value( 0x03, ( self.bit_set( @registers.get_value( 0x03 ), 4 )))
+        @registers.set_value( 0x03, ( @registers.get_value( 0x03 ).bit_set( 4 ) ))
       end
 
       def display_show_time_filer
-        @registers.set_value( 0x03, ( self.bit_clear( @registers.get_value( 0x03 ), 4 )))
+        @registers.set_value( 0x03, ( @registers.get_value( 0x03 ).bit_clear( 4 ) ))
       end
 
 
@@ -138,14 +139,6 @@ module HAIthermo
       
       def c_to_f(temp_c)
         ( 9.0 / 5 * temp_c ) + 32.0
-      end
-    
-      def bit_set(byte, bit_to_set)
-        byte | ( 2 ** bit_to_set )
-      end
-      
-      def bit_clear(byte, bit_to_clear)
-        byte & ((2 ** bit_to_clear) ^ 0b11111111)
       end
 
     end
