@@ -48,6 +48,18 @@ module HAIthermo
       def get_limits
         self.get_registers( 0x05, 2 )
       end
+      
+      def get_weekday_schedule
+        self.get_registers( 0x15, 12)
+      end
+      
+      def get_saturday_schedule
+        self.get_registers( 0x21, 12)
+      end
+
+      def get_sunday_schedule
+        self.get_registers( 0x2D, 12)
+      end
 
       def get_registers( start_register, quantity)
         @my_control.send( PollForRegisters.new( self.address, start_register, quantity ).assemble_packet )
@@ -72,18 +84,17 @@ module HAIthermo
       
 
 
-
-      def add_schedule(day_of_week, time_of_day, set_time, cool_setpoint, heat_setpoint)
-        @schedules << ThermostatSchedule.new(day_of_week, time_of_day, set_time, cool_setpoint, heat_setpoint)
-      end
-    
-      def get_schedule(day_of_week, time_of_day)
-        @schedules.detect{ |s| s.day_of_week == day_of_week && s.time_of_day == time_of_day }
-      end
-    
-      def destroy_schedule(day_of_week, time_of_day)
-        @schedules.delete_if{ |s| s.day_of_week == day_of_week && s.time_of_day == time_of_day }
-      end
+      # def add_schedule(day_of_week, time_of_day, set_time, cool_setpoint, heat_setpoint)
+      #   @schedules << ThermostatSchedule.new(day_of_week, time_of_day, set_time, cool_setpoint, heat_setpoint)
+      # end
+      #     
+      # def get_schedule(day_of_week, time_of_day)
+      #   @schedules.detect{ |s| s.day_of_week == day_of_week && s.time_of_day == time_of_day }
+      # end
+      #     
+      # def destroy_schedule(day_of_week, time_of_day)
+      #   @schedules.delete_if{ |s| s.day_of_week == day_of_week && s.time_of_day == time_of_day }
+      # end
     
     
     
