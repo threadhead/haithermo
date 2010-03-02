@@ -58,7 +58,7 @@ module  HAIthermo
     def send(send_string)
       puts ">>> #{MessageFactory.to_hex_string send_string}"
       @sp.puts send_string
-      sleep(0.2)
+      sleep(0.1)
     end
 
     def read

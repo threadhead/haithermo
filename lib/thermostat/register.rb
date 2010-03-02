@@ -137,9 +137,9 @@ module HAIthermo
                       { :name => 'system_run_time_last_week', :limits => (0..127) },
                     
                         #only used in models with real time pricing
-                      { :name => 'real_time_pricing_setback', :limits => (0..127) },
-                      { :name => 'high', :limits => (0..127) },
-                      { :name => 'critical', :limits => (0..127) },
+                      { :name => 'real_time_pricing_setback_mid', :limits => (0..127) },
+                      { :name => 'real_time_pricing_setback_high', :limits => (0..127) },
+                      { :name => 'real_time_pricing_setback_critical', :limits => (0..127) },
                     
                         # programming registers
                       { :name => 'weekday_morning_time', :limits => (0..255) },
