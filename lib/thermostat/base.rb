@@ -64,6 +64,7 @@ module HAIthermo
 
       def get_registers_from_thermo( start_register, quantity)
         @my_control.send( PollForRegisters.new( self.address, start_register, quantity ).assemble_packet )
+        @my_control.read
       end
 
 
