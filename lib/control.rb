@@ -29,7 +29,7 @@ module  HAIthermo
     end
     
 
-    def open(port="/dev/ttyS1")
+    def open(port="/dev/ttyS0")
       @sp = SerialPort.new(port, BAUD_RATE, DATA_BITS, STOP_BITS, PARITY)
       @sp.read_timeout = 100
       puts 'read_timeout: ' + @sp.read_timeout.to_s
