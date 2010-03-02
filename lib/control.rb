@@ -56,7 +56,7 @@ module  HAIthermo
 
 
     def send(send_string)
-      puts ">>> #{MessageFactory.hex_to_string send_string}"
+      puts ">>> #{MessageFactory.to_hex_string send_string}"
       @sp.puts send_string
       sleep(0.2)
     end
@@ -65,7 +65,7 @@ module  HAIthermo
       buffer = ""
       begin
         get_buffer = @sp.gets
-        puts "<<<(#{get_buffer.nil? ? 0 : get_buffer.length}) #{MessageFactory.hex_to_string(get_buffer) unless get_butter.nil?}"
+        puts "<<<(#{get_buffer.nil? ? 0 : get_buffer.length}) #{MessageFactory.to_hex_string(get_buffer) unless get_butter.nil?}"
         unless get_buffer.nil?
           buffer << get_buffer
           # sleep(0.1)
