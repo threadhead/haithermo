@@ -22,6 +22,7 @@ module HAIthermo
         packet << (@message_type + (@data.length * 0b10000)).chr
         packet << @data
         packet << HAIthermo::MessageFactory.generate_checksum(packet)
+        puts "asseble_packet: #{MessageFactory.to_hex_string(packet)}"
       end
     
     
