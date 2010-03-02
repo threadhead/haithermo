@@ -84,8 +84,8 @@ module HAIthermo
     
     #converts a string representing hex values into a more readable format
     def self.to_hex_string(data_string)
-      # data_string.split(//).collect{ |s| s.unpack('H*')[0]}.join(' ')
-      data_string.bytes.map { |b| b.to_s(16) }.join(' ')
+      # data_string.split(//).collect{ |s| s.unpack('H*')[0]}.join(' ')  # for ruby 1.8.X
+      data_string.bytes.map { |b| b.to_s(16) }.join(' ')  # for ruby 1.9.X
     end
     
 

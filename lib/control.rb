@@ -74,9 +74,9 @@ module  HAIthermo
       buffer
     end
 
-    def self.hex_to_string(hex_string)
-      hex_string.split(//).collect{ |s| s.unpack('H*')[0]}
-    end
+    # def self.hex_to_string(hex_string)
+    #    hex_string.split(//).collect{ |s| s.unpack('H*')[0]}
+    #  end
 
     def debug_on
       @debug = true
