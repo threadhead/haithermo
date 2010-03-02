@@ -8,4 +8,4 @@ sp.open
 sp.add_thermostat(1)
 sp.get_thermostat(1).get_model
 
-puts "#{sp.get_thermostat(1).model_of_thermostat}"
+puts "#{sp.get_thermostat(1).registers.model_of_thermostat}"
