@@ -12,14 +12,15 @@ module HAIthermo
       def create_accessors
         @registers.each_with_index do |register, idx|
           # self.instance_eval do
-            self.class.send(:define_method, "#{register[:name]}", proc{ self.get_value( "#{idx}") })
-            self.class.send(:define_method, "#{register[:name]}=", proc{ |value| self.set_value( "#{icx}", value ) })
+            self.class.send(:define_method, "#{register[:name]}", proc{ self.get_value( "#{idx}".to_i ) })
+            self.class.send(:define_method, "#{register[:name]}=", proc{ |value| self.set_value( "#{idx}".to_i, value ) })
           # end
         end
       end
     
     
       def set_value(register, value)
+        # puts "set_value: #{register}, #{value}"
         self.validate_register_limits(register, value)
         @registers[register][:value] = value
         @registers[register][:updated_at] = Time.new
@@ -60,6 +61,10 @@ module HAIthermo
         str
       end
       
+      def limits(register)
+        @registers[register][:limits]
+      end
+      
       
       
       def get_name(register)
@@ -93,6 +98,12 @@ module HAIthermo
         if register < 0 || register > ( @registers.size - 1 )
           raise RegisterError.new("register '#{register}' is not a valid register")
         end
+      end
+      
+      
+      def dump
+        puts "--- ALL REGISTER VALUES ---"
+        @registers.map { |r| puts "name: #{r[:name]}, value: #{r[:value]}" }
       end
       
       
