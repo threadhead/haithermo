@@ -7,3 +7,5 @@ sp = HAIthermo::Control.new(:debug => true)
 sp.open
 sp.add_thermostat(1)
 sp.get_thermostat(1).get_model
+
+puts "#{sp.get_thermostat(1).model_of_thermostat}"
