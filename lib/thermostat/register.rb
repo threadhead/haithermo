@@ -5,7 +5,17 @@ module HAIthermo
     class Register
       def initialize(address)
         initialize_registers
+        create_accessors
         set_value(0, address)
+      end
+      
+      def create_accessors
+        @registers.each_with_index do |register, idx|
+          # self.instance_eval do
+            self.class.send(:define_method, "#{register[:name]}", proc{ self.get_value( "#{idx}") })
+            self.class.send(:define_method, "#{register[:name]}=", proc{ |value| self.set_value( "#{icx}", value ) })
+          # end
+        end
       end
     
     
@@ -26,6 +36,8 @@ module HAIthermo
         string_bytes = string.bytes.to_a
         self.set_value_range( string_bytes[0], string_bytes[1, 100])
       end
+          
+          
           
       def get_value(register)
         # puts "geting_register_value: #{register}"
@@ -49,6 +61,7 @@ module HAIthermo
       end
       
       
+      
       def get_name(register)
         self.validate_register_range(register)
         self.humanize( @registers[register][:name] )
@@ -58,6 +71,11 @@ module HAIthermo
       def get_updated_at(register)
         self.validate_register_range(register)
         @registers[register][:updated_at]
+      end
+
+
+      def register_names
+        @registers.map { |register| register[:name] }
       end
     
     

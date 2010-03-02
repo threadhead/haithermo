@@ -5,6 +5,14 @@ class TestRegisters < Test::Unit::TestCase
     @registers = HAIthermo::Thermostat::Register.new(1)
   end
   
+  def test_register_accessor_methods
+    @registers.register_names.each_with_index do |register, idx|
+      assert HAIthermo::Thermostat::Register.method_defined?( register.to_sym )
+      assert HAIthermo::Thermostat::Register.method_defined?( "#{register}=".to_sym )
+    end
+    # puts HAIthermo::Thermostat::Register.instance_methods(false)
+  end
+  
   def test_create_valid_new_registers
     assert_instance_of(HAIthermo::Thermostat::Register, HAIthermo::Thermostat::Register.new(1))
     assert_instance_of(HAIthermo::Thermostat::Register, HAIthermo::Thermostat::Register.new(127))

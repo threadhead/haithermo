@@ -11,7 +11,7 @@ module HAIthermo
     class Base
       extend HAIthermo::Thermostat::DisplayOptions
       extend HAIthermo::Thermostat::OutputStatus
-      include HAIthermo::Thermostat::Schedule
+      # include HAIthermo::Thermostat::Schedule
       attr_reader :registers
       
       def initialize(my_control, thermo_address)
