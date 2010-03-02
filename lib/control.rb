@@ -29,7 +29,7 @@ module  HAIthermo
     end
     
 
-    def open(port="/dev/ttyS0")
+    def open(port="/dev/ttyS1")
       @sp = SerialPort.new(port, BAUD_RATE, DATA_BITS, STOP_BITS, PARITY)
       @sp.read_timeout = 100
       puts 'read_timeout: ' + @sp.read_timeout.to_s
@@ -56,16 +56,16 @@ module  HAIthermo
 
 
     def send(send_string)
-      puts ">>> #{send_string}"
+      puts ">>> #{MessageFactory.hex_to_string send_string}"
       @sp.puts send_string
-      sleep(0.5)
+      sleep(0.2)
     end
 
     def read
       buffer = ""
       begin
         get_buffer = @sp.gets
-        puts "buffer check: " + (get_buffer.nil? ? "0" : get_buffer.length.to_s)
+        puts "<<<(#{get_buffer.nil? ? 0 : get_buffer.length}) #{MessageFactory.hex_to_string(get_buffer) unless get_butter.nil?}"
         unless get_buffer.nil?
           buffer << get_buffer
           # sleep(0.1)
