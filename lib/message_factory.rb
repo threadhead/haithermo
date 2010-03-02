@@ -75,6 +75,7 @@ module HAIthermo
       data = packet[0,packet.length-1]
       check = MessageFactory.generate_checksum(data)
       puts "check: #{check.getbyte(0)}"
+      puts "calc: #{check == checksum}"
       check == checksum
     end
     
