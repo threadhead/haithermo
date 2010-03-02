@@ -21,7 +21,7 @@ module HAIthermo
         packet << (@thermo_address + (host_message? ? 0b0 : 0b10000000)).chr
         packet << (@message_type + (@data.length * 0b10000)).chr
         packet << @data
-        packet << HAIthermo::MessageFactory.generate_checksum(packet)
+        packet << HAIthermo::MessageFactory.generate_checksum(packet).chr
       end
     
     

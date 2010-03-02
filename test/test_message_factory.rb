@@ -117,11 +117,11 @@ class TestMessageFactory < Test::Unit::TestCase
   
   def test_checksum_generator
     test_string = @mf.hex_string_to_string("01 20 0F 03")
-    assert_equal(0x33.chr, @mf.generate_checksum(test_string))
+    assert_equal(0x33, @mf.generate_checksum(test_string))
     test_string = @mf.hex_string_to_string("81 32 47 00 01")
-    assert_equal(0xfb.chr, @mf.generate_checksum(test_string))
+    assert_equal(0xfb, @mf.generate_checksum(test_string))
     test_string = @mf.hex_string_to_string("82 32 47 00 01")
-    assert_equal(0xfc.chr, @mf.generate_checksum(test_string))
+    assert_equal(0xfc, @mf.generate_checksum(test_string))
   end
   
   
