@@ -9,9 +9,7 @@ require 'lib/messages/receive_data'
 require 'lib/messages/receive_group1_data'
 require 'lib/messages/receive_group2_data'
 
-module HAIthermo
-  # require 'ruby-debug'
-  
+module HAIthermo  
   class MessageFactory
     # the message factory is responsible for managing the creating and routing
     # of message packets
@@ -38,21 +36,21 @@ module HAIthermo
       end
     end
     
-    def poll_for_registers(thermo_address, first_register, number_of_registers)
-      PollForRegisters.new(thermo_address, first_register, number_of_registers)
-    end
-    
-    def set_registers(thermo_address, start_register, data_bytes)
-      SetRegisters.new(thermo_address, start_register, data_bytes)
-    end
-    
-    def poll_for_group1_data(thermo_address)
-      PollForGroup1Data.new(thermo_address)
-    end
-    
-    def poll_for_group2_data(thermo_address)
-      PollForGroup2Data.new(thermo_address)
-    end
+    # def poll_for_registers(thermo_address, first_register, number_of_registers)
+    #   PollForRegisters.new(thermo_address, first_register, number_of_registers)
+    # end
+    # 
+    # def set_registers(thermo_address, start_register, data_bytes)
+    #   SetRegisters.new(thermo_address, start_register, data_bytes)
+    # end
+    # 
+    # def poll_for_group1_data(thermo_address)
+    #   PollForGroup1Data.new(thermo_address)
+    # end
+    # 
+    # def poll_for_group2_data(thermo_address)
+    #   PollForGroup2Data.new(thermo_address)
+    # end
     
     
     #breaks a packet(string) apart and assigns the attributes
@@ -71,11 +69,8 @@ module HAIthermo
     
     def validate_packet(packet)
       checksum = packet[packet.length-1].getbyte(0)
-      puts "checksum: #{checksum}"
       data = packet[0,packet.length-1]
       check = MessageFactory.generate_checksum(data)
-      puts "check: #{check}"
-      puts "calc: #{check == checksum}"
       check == checksum
     end
     
