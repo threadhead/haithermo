@@ -70,7 +70,7 @@ module HAIthermo
     
     
     def validate_packet(packet)
-      checksum = packet[packet.length-1].chr
+      checksum = packet[packet.length-1]
       data = packet[0,packet.length-1]
       check = MessageFactory.generate_checksum(data)
       check == checksum

@@ -110,6 +110,8 @@ class TestMessageFactory < Test::Unit::TestCase
     assert(@msg_fac.validate_packet(test_packet))
     test_packet = @mf.hex_string_to_string("02 21 44 64 CB")
     assert(@msg_fac.validate_packet(test_packet))
+    test_packet = @mf.hex_string_to_string("81 22 49 00 EC")
+    assert(@msg_fac.validate_packet(test_packet))
   end
   
   
@@ -133,9 +135,9 @@ class TestMessageFactory < Test::Unit::TestCase
   
   def test_to_hex_string
     test_string = @mf.hex_string_to_string("07 fc 61")
-    assert_equal("07 fc 61", @mf.to_hex_string(test_string))
+    assert_equal("7 fc 61", @mf.to_hex_string(test_string))
     test_string = @mf.hex_string_to_string("07 fc 45 31 00 ff")
-    assert_equal("07 fc 45 31 00 ff", @mf.to_hex_string(test_string))
+    assert_equal("7 fc 45 31 0 ff", @mf.to_hex_string(test_string))
   end
   
 end
