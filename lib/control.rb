@@ -56,7 +56,7 @@ module  HAIthermo
 
 
     def send(send_string)
-      @sp.puts send_string
+      puts send_string
       sleep(0.5)
     end
 
