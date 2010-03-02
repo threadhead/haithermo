@@ -7,10 +7,21 @@ sp = HAIthermo::Control.new(:debug => true)
 sp.open
 sp.add_thermostat(1)
 sp.get_thermostat(1).get_model
+sp.get_thermostat(1).get_limits
+sp.get_thermostat(1).get_filter_and_runtimes
+sp.get_thermostat(1).get_setpoints
+sp.get_thermostat(1).get_mode_status
+sp.get_thermostat(1).get_display_options
+sp.get_thermostat(1).get_weekday_schedule
+sp.get_thermostat(1).get_saturday_schedule
+sp.get_thermostat(1).get_sunday_schedule
+
+sp.get_thermostat(1).registers.dump
+
+
 
 puts "model: #{sp.get_thermostat(1).registers.model_of_thermostat}"
 
-sp.get_thermostat(1).get_limits
 
 puts "cool_setpoint_low_limit: #{sp.get_thermostat(1).registers.cool_setpoint_low_limit}"
 puts "heat_setpoint_high_limit: #{sp.get_thermostat(1).registers.heat_setpoint_high_limit}"
