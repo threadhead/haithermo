@@ -11,11 +11,12 @@ module HAIthermo
     class Base
       extend HAIthermo::Thermostat::DisplayOptions
       extend HAIthermo::Thermostat::OutputStatus
+      include HAIthermo::Thermostat::Schedule
+      attr_reader :registers
       
-      def initialize(my_control, address)
+      def initialize(my_control, thermo_address)
         @my_control = my_control
-        @registers = HAIthermo::Thermostat::Register.new(address)
-        @schedules = []
+        @registers = HAIthermo::Thermostat::Register.new( thermo_address )
       end
     
     
@@ -82,21 +83,6 @@ module HAIthermo
         @my_control.send( SetRegisters.new( self.address, 0x41, seconds + minutes + hours ))
       end
       
-
-
-      # def add_schedule(day_of_week, time_of_day, set_time, cool_setpoint, heat_setpoint)
-      #   @schedules << ThermostatSchedule.new(day_of_week, time_of_day, set_time, cool_setpoint, heat_setpoint)
-      # end
-      #     
-      # def get_schedule(day_of_week, time_of_day)
-      #   @schedules.detect{ |s| s.day_of_week == day_of_week && s.time_of_day == time_of_day }
-      # end
-      #     
-      # def destroy_schedule(day_of_week, time_of_day)
-      #   @schedules.delete_if{ |s| s.day_of_week == day_of_week && s.time_of_day == time_of_day }
-      # end
-    
-    
     
       def model_name
         case @registers.get_value( 0x49 )

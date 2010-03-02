@@ -18,7 +18,7 @@ module HAIthermo
       def set_value_range(start_register, values)
         start_register -= 1
         values.each do |value|
-          self.set_value( start_register += 1, value )
+          self.set_value( (start_register += 1), value )
         end
       end
       
@@ -28,6 +28,7 @@ module HAIthermo
       end
           
       def get_value(register)
+        # puts "geting_register_value: #{register}"
         self.validate_register_range(register)
         @registers[register][:value]
       end
