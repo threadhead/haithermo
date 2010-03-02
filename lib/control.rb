@@ -56,7 +56,8 @@ module  HAIthermo
 
 
     def send(send_string)
-      puts send_string
+      puts ">>> #{send_string}"
+      @sp.puts send_string
       sleep(0.5)
     end
 
@@ -73,8 +74,8 @@ module  HAIthermo
       buffer
     end
 
-    def pp_hex_to_string(hex_string)
-      pp hex_string.split(//).collect{ |s| s.unpack('H*')[0]}
+    def self.hex_to_string(hex_string)
+      hex_string.split(//).collect{ |s| s.unpack('H*')[0]}
     end
 
     def debug_on
@@ -85,23 +86,6 @@ module  HAIthermo
       @debug = false
     end
 
-    # module ClassMethods
-    #      # def acts_as_commentable
-    #      #   include Juixe::Acts::Commentable::InstanceMethods
-    #      #   extend Juixe::Acts::Commentable::SingletonMethods
-    #      # end
-    #    end
-    # 
-    #    module SingletonMethods
-    #      #add clss methods here
-    #    end
-    # 
-    #    module InstanceMethods
-    #      # Add instance methods here
-    #    end
-    # 
-    #    def self.included(base)
-    #      base.extend ClassMethods
-    #    end
+    
   end
 end

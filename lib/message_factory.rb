@@ -88,7 +88,7 @@ module HAIthermo
     end
     
 
-    #pass a string with a duplet representing a hex number wiht a
+    #pass a string with a duplet representing a hex number with a
     #space separating each, i.e. "07 fc 91"
     def self.hex_string_to_string(hex_string)
       hex_string.split(' ').collect{ |d| d.hex.chr}.join
