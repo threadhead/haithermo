@@ -6,15 +6,16 @@ module HAIthermo
   module MyLogger
     def self.new(log_file, level = Logger::DEBUG)
       if log_file
-        HAIthermo.logger = Logger.new(log_file)
+        logger = HAIthermo.logger = Logger.new(log_file)
       else
-        HAIthermo.logger = Logger.new(STDOUT)
+        logger = HAIthermo.logger = Logger.new(STDOUT)
       end
-      HAIthermo.logger.level = level
-      HAIthermo.logger.datetime_format = "%d %b %H:%M:%S"
-      HAIthermo.logger.formatter = proc { |severity, datetime, progname, msg|
-          "[#{datetime}] #{msg}\n"
+      logger.level = level
+      logger.formatter = proc { |severity, datetime, progname, msg|
+          "[#{datetime.strftime("%d %b %H:%M:%S")}] #{msg}\n"
         }
+        puts "logger format: #{logger.datetime_format}"
+      return logger
     end
     
     # def info(message)
