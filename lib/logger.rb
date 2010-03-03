@@ -12,7 +12,7 @@ module HAIthermo
       end
       logger.level = level
       logger.formatter = proc { |severity, datetime, progname, msg|
-          "[#{datetime.strftime("%d %b %H:%M:%S")}] #{msg}\n"
+          "[#{datetime.strftime("%d %b %H:%M:%S.%2N")}] #{msg}\n"
         }
         puts "logger format: #{logger.datetime_format}"
       return logger
