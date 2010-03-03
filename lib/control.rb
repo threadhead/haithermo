@@ -60,7 +60,7 @@ module  HAIthermo
 
 
     def send(send_string)
-      HAIthermo.info ">>> #{MessageFactory.to_hex_string send_string}"
+      HAIthermo.logger.info ">>> #{MessageFactory.to_hex_string send_string}"
       @sp.puts send_string
       sleep(0.2)
     end
