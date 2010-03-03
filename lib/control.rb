@@ -74,7 +74,7 @@ module  HAIthermo
           # sleep(0.1)
         end
       end until get_buffer.nil?
-      HAIthermo.info "<<< #{MessageFactory.to_hex_string(buffer) unless buffer.nil?}"
+      HAIthermo.logger.info "<<< #{MessageFactory.to_hex_string(buffer) unless buffer.nil?}"
       buffer
     end
 
