@@ -3,7 +3,9 @@ require 'pp'
 
 puts HAIthermo.version
 
-sp = HAIthermo::Control.new(:debug => true)
+sp = HAIthermo::Control.new(:debug => true,
+                            :log_file => File.join(File.dirname(__FILE__), 'haithermo.log'),
+                            :log_level => DEBUG )
 sp.open
 sp.add_thermostat(1)
 sp.get_thermostat(1).get_model
@@ -20,8 +22,8 @@ sp.get_thermostat(1).registers.dump
 
 
 
-puts "model: #{sp.get_thermostat(1).registers.model_of_thermostat}"
-
-
-puts "cool_setpoint_low_limit: #{sp.get_thermostat(1).registers.cool_setpoint_low_limit}"
-puts "heat_setpoint_high_limit: #{sp.get_thermostat(1).registers.heat_setpoint_high_limit}"
+# puts "model: #{sp.get_thermostat(1).registers.model_of_thermostat}"
+# 
+# 
+# puts "cool_setpoint_low_limit: #{sp.get_thermostat(1).registers.cool_setpoint_low_limit}"
+# puts "heat_setpoint_high_limit: #{sp.get_thermostat(1).registers.heat_setpoint_high_limit}"
