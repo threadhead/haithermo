@@ -1,27 +1,30 @@
 require 'logger'
 
 module HAIthermo
-  class Logger
-    attr_accessor :logger
-    def initialize(file, level = Logger::DEBUG)
-      @logger = Logger.new(log_file)
-      @logger.level = level
-      @logger.datetime_format = "%d %b %H:%M:%S"
-      @logger.formatter = proc { |severity, datetime, progname, msg|
-          "[#{datetime}] #{msg}\n"
-        }
+  class << self; attr_accessor :logger; end
+  
+  module Logger
+    def self.new(file, level = Logger::DEBUG)
+      if file
+        HAIthermo.logger = Logger.new(log_file)
+        HAIthermo.logger.level = level
+        HAIthermo.logger.datetime_format = "%d %b %H:%M:%S"
+        HAIthermo.logger.formatter = proc { |severity, datetime, progname, msg|
+            "[#{datetime}] #{msg}\n"
+          }
+      end
     end
     
     def info(message)
-      @logger.info message 
+      HAIthermo.logger.info message 
     end
     
     def debug(message)
-      @logger.debug message
+      HAIthermo.logger.debug message
     end
     
     def close
-      @logger.close
+      HAIthermo.logger.close
     end
   end
 end
