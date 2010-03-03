@@ -28,3 +28,5 @@ sp.get_thermostat(1).registers.dump
 # 
 # puts "cool_setpoint_low_limit: #{sp.get_thermostat(1).registers.cool_setpoint_low_limit}"
 # puts "heat_setpoint_high_limit: #{sp.get_thermostat(1).registers.heat_setpoint_high_limit}"
+
+sp.close
