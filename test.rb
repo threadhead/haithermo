@@ -1,11 +1,12 @@
 require 'hai_thermo'
 require 'pp'
+# require 'logger'
 
 puts HAIthermo.version
 
 sp = HAIthermo::Control.new(:debug => true,
                             :log_file => File.join(File.dirname(__FILE__), 'haithermo.log'),
-                            :log_level => DEBUG )
+                            :log_level => Logger::DEBUG )
 sp.open
 sp.add_thermostat(1)
 sp.get_thermostat(1).get_model
