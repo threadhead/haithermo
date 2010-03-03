@@ -4,8 +4,8 @@ module HAIthermo
   class << self; attr_accessor :logger; end
   
   module Logger
-    def self.new(file, level = Logger::DEBUG)
-      if file
+    def self.new(log_file, level = Logger::DEBUG)
+      if log_file
         HAIthermo.logger = Logger.new(log_file)
       else
         HAIthermo.logger = Logger.new(STDOUT)
