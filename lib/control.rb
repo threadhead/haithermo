@@ -25,7 +25,7 @@ module  HAIthermo
     
 
     def initialize(options={})
-      HAIthermo::Logger.new(options[:log_file], options[:log_level])
+      HAIthermo::MyLogger.new(options[:log_file], options[:log_level])
       @debug = options[:debug] ? options[:debug] : false
       @thermostats = []
     end
