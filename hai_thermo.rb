@@ -17,4 +17,4 @@ module  HAIthermo
   # end
 end
 
-require 'lib/control'
+require File.join(File.dirname(__FILE__), 'lib', 'control')

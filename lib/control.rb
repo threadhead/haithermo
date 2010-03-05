@@ -11,9 +11,12 @@ rescue
 end
 
 module  HAIthermo
-  require 'lib/thermostat'
-  require 'lib/message_factory'
-  require 'lib/logger'
+  %w(thermostat message_factory logger).each do |file|
+    require File.join(File.dirname(__FILE__), "#{file}")
+  end
+  # require 'lib/thermostat'
+  # require 'lib/message_factory'
+  # require 'lib/logger'
   
   class Control
     

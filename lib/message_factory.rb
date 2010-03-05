@@ -1,13 +1,7 @@
-require 'lib/messages/base'
-require 'lib/messages/poll_for_registers'
-require 'lib/messages/poll_for_group1_data'
-require 'lib/messages/poll_for_group2_data'
-require 'lib/messages/set_registers'
-require 'lib/messages/receive_ACK'
-require 'lib/messages/receive_NACK'
-require 'lib/messages/receive_data'
-require 'lib/messages/receive_group1_data'
-require 'lib/messages/receive_group2_data'
+%w(base poll_for_registers poll_for_group1_data poll_for_group2_data set_registers receive_ACK receive_NACK receive_data receive_group1_data receive_group2_data).each do |file|
+  require File.join(File.dirname(__FILE__), 'messages', "#{file}")
+end
+
 
 module HAIthermo  
   class MessageFactory

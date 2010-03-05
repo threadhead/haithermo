@@ -1,9 +1,7 @@
-require 'lib/thermostat/register'
-# require 'lib/thermostat/schedule'
-# require 'lib/thermostat/timestamp_attribute'
-require 'lib/thermostat/display_options'
-require 'lib/thermostat/output_status'
-require 'lib/thermostat/actions'
+%w(register display_options output_status actions).each do |file|
+  require File.join(File.dirname(__FILE__), "#{file}")
+end
+
 
 module HAIthermo
   module Thermostat
