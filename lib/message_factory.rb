@@ -9,7 +9,7 @@ module HAIthermo
     # of message packets
     
     def new_incoming_message(packet)
-      unless packet.nil?
+      unless packet.nil? || packet.empty?
         dissamble_packet(packet)
         # puts "valid: #{@valid}, mt: #{@message_type}"
       
