@@ -9,24 +9,26 @@ module HAIthermo
     # of message packets
     
     def new_incoming_message(packet)
-      dissamble_packet(packet)
-      # puts "valid: #{@valid}, mt: #{@message_type}"
+      unless packet.nil?
+        dissamble_packet(packet)
+        # puts "valid: #{@valid}, mt: #{@message_type}"
       
-      if @valid
-        case @message_type
-        when 0
-          ReceiveACK.new(@thermo_address)
-        when 1
-          ReceiveNACK.new(@thermo_address)
-        when 2
-          ReceiveData.new(@thermo_address, @data)
-        when 3
-          ReceiveGroup1Data.new(@thermo_address, @data)
-        when 4
-          ReceiveGroup2Data.new(@thermo_address, @data)
+        if @valid
+          case @message_type
+          when 0
+            ReceiveACK.new(@thermo_address)
+          when 1
+            ReceiveNACK.new(@thermo_address)
+          when 2
+            ReceiveData.new(@thermo_address, @data)
+          when 3
+            ReceiveGroup1Data.new(@thermo_address, @data)
+          when 4
+            ReceiveGroup2Data.new(@thermo_address, @data)
+          end
+        else
+          raise 'packet checksum did not validate'
         end
-      else
-        raise 'packet checksum did not validate'
       end
     end
     
