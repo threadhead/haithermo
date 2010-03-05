@@ -1,4 +1,4 @@
-# $:.unshift File.dirname(__FILE__)
+require File.join(File.dirname(__FILE__), 'lib', 'control')
 
 module  HAIthermo
     
@@ -17,4 +17,3 @@ module  HAIthermo
   # end
 end
 
-require File.join(File.dirname(__FILE__), 'lib', 'control')
