@@ -10,9 +10,9 @@ module HAIthermo
     class Base
       attr_reader :registers
 
-      extend HAIthermo::Thermostat::DisplayOptions
-      extend HAIthermo::Thermostat::OutputStatus
-      extend HAIthermo::Thermostat::Actions
+      include HAIthermo::Thermostat::DisplayOptions
+      include HAIthermo::Thermostat::OutputStatus
+      include HAIthermo::Thermostat::Actions
 
       
       def initialize(my_control, thermo_address)
