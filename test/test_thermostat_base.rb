@@ -7,7 +7,7 @@ class TestThermostat < Test::Unit::TestCase
   
   def test_add_a_new_thermostat_and_get_it
     thermostats = @control.add_thermostat(1)
-    assert_equal thermostats[0], @control.get_thermostat(1)
+    assert_equal thermostats[0], @control.thermostat(1)
   end
   
   def test_add_thermostat_check_address_range
@@ -24,9 +24,9 @@ class TestThermostat < Test::Unit::TestCase
     thermostats = @control.add_thermostat(4)
     thermostats = @control.add_thermostat(1)
     
-    assert_equal 2, @control.get_thermostat(2).address
-    assert_equal 4, @control.get_thermostat(4).address
-    assert_equal 1, @control.get_thermostat(1).address
+    assert_equal 2, @control.thermostat(2).address
+    assert_equal 4, @control.thermostat(4).address
+    assert_equal 1, @control.thermostat(1).address
   end
   
   def test_destroy_thermostat
@@ -34,8 +34,8 @@ class TestThermostat < Test::Unit::TestCase
     @control.add_thermostat(3)
     
     @control.destroy_thermostat(1)
-    assert_equal 3, @control.get_thermostat(3).address
-    assert_nil @control.get_thermostat(1)
+    assert_equal 3, @control.thermostat(3).address
+    assert_nil @control.thermostat(1)
   end
   
   def test_thermo_conversions

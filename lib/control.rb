@@ -26,7 +26,7 @@ module  HAIthermo
 
     def initialize(options={})
       HAIthermo::MyLogger.new(options[:log_file], options[:log_level])
-      @debug = options[:debug] ? options[:debug] : false
+      # @debug = options[:debug] ? options[:debug] : false
       @thermostats = []
     end
     
@@ -49,7 +49,7 @@ module  HAIthermo
       @thermostats << HAIthermo::Thermostat::Base.new(self, address)
     end
     
-    def get_thermostat(address)
+    def thermostat(address)
       @thermostats.detect{ |thermo| thermo.address == address }
     end
     
@@ -60,7 +60,7 @@ module  HAIthermo
 
 
     def send(send_string)
-      HAIthermo.logger.info ">>> #{MessageFactory.to_hex_string send_string}"
+      HAIthermo.logger.debug ">>> #{MessageFactory.to_hex_string send_string}"
       @sp.write send_string
       sleep(0.2)
     end
@@ -74,20 +74,8 @@ module  HAIthermo
           # sleep(0.1)
         end
       end until get_buffer.nil?
-      HAIthermo.logger.info "<<< #{MessageFactory.to_hex_string(buffer) unless buffer.nil?}"
+      HAIthermo.logger.debug "<<< #{MessageFactory.to_hex_string(buffer) unless buffer.nil?}"
       buffer
-    end
-
-    # def self.hex_to_string(hex_string)
-    #    hex_string.split(//).collect{ |s| s.unpack('H*')[0]}
-    #  end
-
-    def debug_on
-      @debug = true
-    end
-    
-    def debug_off
-      @debug = false
     end
 
     
