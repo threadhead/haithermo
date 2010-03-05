@@ -1,4 +1,5 @@
-require 'lib/thermostat/register_bits'
+require File.join(File.dirname(__FILE__), 'thermostat', 'register_bits')
+
 
 module HAIthermo
   module Thermostat
