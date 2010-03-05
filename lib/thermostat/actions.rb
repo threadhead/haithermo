@@ -43,7 +43,7 @@ module HAIthermo
         self.get_registers_from_thermo( 0x03, 1 )
       end
 
-      def get_model
+      def self.get_model
         self.get_registers_from_thermo( 0x49, 1 )
       end
 
