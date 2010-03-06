@@ -1,4 +1,4 @@
-require 'lib/thermostat/fixnum_bits'
+require File.join(File.dirname(__FILE__), "fixnum_bits")
 
 module HAIthermo
   module Thermostat

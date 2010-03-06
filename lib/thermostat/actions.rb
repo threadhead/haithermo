@@ -43,7 +43,7 @@ module HAIthermo
         self.get_registers_from_thermo( 0x03, 1 )
       end
 
-      def self.get_model
+      def get_model
         self.get_registers_from_thermo( 0x49, 1 )
       end
 
@@ -72,7 +72,8 @@ module HAIthermo
 
 
       def set_outside_temp_c(temp_c)
-        @my_control.send( SetRegisters.new( self.address, 0x44, self.c_to_omnistat( temp_c )).assemble_packet )
+        @registers.set_value( 0x44, self.c_to_omnistat( temp_c ) )
+        self.set_registers_from_thermo( 0x44, 1 )
       end
 
       def set_outside_temp_f(temp_f)
@@ -82,7 +83,7 @@ module HAIthermo
       def set_time
         time = Time.now
         hours, minutes, seconds = time.hour.chr, time.min.chr, time.sec.chr
-        @my_control.send( SetRegisters.new( self.address, 0x41, seconds + minutes + hours ))
+        self.set_registers_from_thermo( 0x41, seconds + minutes + hours )
       end
     end
   end

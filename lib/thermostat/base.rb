@@ -12,7 +12,7 @@ module HAIthermo
 
       extend HAIthermo::Thermostat::DisplayOptions
       extend HAIthermo::Thermostat::OutputStatus
-      extend HAIthermo::Thermostat::Actions
+      include HAIthermo::Thermostat::Actions
 
       
       def initialize(my_control, thermo_address)
@@ -29,7 +29,7 @@ module HAIthermo
       def get_registers_from_thermo(start_register, quantity)
         @my_control.send( PollForRegisters.new( self.address, start_register, quantity ).assemble_packet )
         mf = MessageFactory.new.new_incoming_message( @my_control.read )
-        @registers.set_value_range_string(mf.data)
+        @registers.set_value_range_string(mf.data) if mf
       end
       
       def set_registers_from_thermo(start_register, quantity)
@@ -37,7 +37,9 @@ module HAIthermo
                             start_register,
                             @registers.get_value_range_string(start_register, quantity)
                             ).assemble_packet )
-        
+        mf = MessageFactory.new.new_incoming_message( @my_control.read )
+        # should get back an ACK
+        # @registers.set_value_range_string(mf.data) if mf
       end
       
      
@@ -65,7 +67,7 @@ module HAIthermo
       end
 
       def c_to_omnistat(temp_c)
-        ( temp_c + 40 ) * 2
+        (( temp_c + 40 ) * 2).to_i
       end
             
       def f_to_c(temp_f)

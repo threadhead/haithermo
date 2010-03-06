@@ -37,6 +37,11 @@ module HAIthermo
         @registers[register][:value]
       end
       
+      def get_value_by_name(register_name)
+        idx = @registers.index{ |reg| reg[:name] == register_name }
+        @registers[idx][:value] if idx
+      end
+      
       def get_value_range(start_register, quantity)
         start_register -= 1
         arr = []
@@ -47,7 +52,8 @@ module HAIthermo
       end
       
       def get_value_range_string(start_register, quantity)
-        str = start_register.chr
+        # str = start_register.chr
+        str = ""
         self.get_value_range(start_register, quantity).each{ |value| str << value.chr }
         str
       end
@@ -73,6 +79,7 @@ module HAIthermo
       def register_names
         @registers.map { |register| register[:name] }
       end
+      
     
     
       def validate_register_limits(register, value)
@@ -125,8 +132,8 @@ module HAIthermo
                       { :name => 'calibration_offset', :limits => (0..59) },
                       { :name => 'cool_setpoint_low_limit', :limits => (0..255) },
                       { :name => 'heat_setpoint_high_limit', :limits => (0..255) },
-                      { :name => 'reserved', :limits => [] },
-                      { :name => 'reserved', :limits => [] },
+                      { :name => 'reserved_07', :limits => [] },
+                      { :name => 'reserved_08', :limits => [] },
                       { :name => 'cooling_anticipator', :limits => (0..30) },
                       { :name => 'heating_anticipator', :limits => (0..30) },
                       { :name => 'cooling_cycle_time', :limits => (2..30) },
@@ -182,7 +189,7 @@ module HAIthermo
                       { :name => 'sunday_night_cool_setpoint', :limits => (0..255) },
                       { :name => 'sunday_night_heat_setpoint', :limits => (0..255) },
                     
-                      { :name => 'reserved', :limits => [] },
+                      { :name => 'reserved_57', :limits => [] },
                     
                       { :name => 'day_of_week', :limits => (0..6) },
                       { :name => 'cool_setpoint', :limits => (0..255) },

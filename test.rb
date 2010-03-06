@@ -9,6 +9,7 @@ sp = HAIthermo::Control.new(:debug => true,
                             :log_level => Logger::DEBUG )
 sp.open
 sp.add_thermostat(1)
+puts HAIthermo::Thermostat::Base.instance_methods.sort
 sp.thermostat(1).get_model
 sp.thermostat(1).get_limits
 sp.thermostat(1).get_filter_and_runtimes

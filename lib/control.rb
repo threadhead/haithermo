@@ -14,10 +14,8 @@ module  HAIthermo
   %w(thermostat message_factory logger).each do |file|
     require File.join(File.dirname(__FILE__), "#{file}")
   end
-  # require 'lib/thermostat'
-  # require 'lib/message_factory'
-  # require 'lib/logger'
-  
+ 
+ 
   class Control
     
     #the port settings are fixed and should not be changes per HAI Thermostats API
@@ -37,7 +35,7 @@ module  HAIthermo
     def open(port="/dev/ttyS0")
       HAIthermo.logger.info "OPEN SERIAL PORT (#{port}, #{BAUD_RATE}, #{DATA_BITS}, #{STOP_BITS}, #{PARITY})"
       @sp = SerialPort.new(port, BAUD_RATE, DATA_BITS, STOP_BITS, PARITY)
-      # @sp.read_timeout = 100
+      @sp.read_timeout = 100
       # puts 'read_timeout: ' + @sp.read_timeout.to_s
     end
 

@@ -38,17 +38,6 @@ module HAIthermo
       def celsius?
         self.get_register_bit( DISPLAY_OPTIONS_REGISTER, 0 ) == 0
       end
-
-
-
-      # def set_register_bit( register, bit_to_set )
-      #   @registers.set_value( register, ( @registers.get_value( register ).bit_set( bit_to_set ) ))
-      # end
-      # 
-      # def clear_register_bit( register, bit_to_clear )
-      #   @registers.set_value( register, ( @registers.get_value( register ).bit_clear( bit_to_clear ) ))
-      # end
-      
       
     end
   end
