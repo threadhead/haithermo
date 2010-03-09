@@ -85,7 +85,7 @@ module HAIthermo
 
 
       def set_outside_temp_c(temp_c)
-        action_info :set_outside_temp_c
+        action_info "set_outside_temp_c: #{temp_c}"
         @registers.set_value( 0x44, self.c_to_omnistat( temp_c ) )
         self.set_registers_from_thermo( 0x44, 1 )
       end
@@ -105,11 +105,11 @@ module HAIthermo
 
       private
       def action_info(message)
-        HAIthermo.log_info "[thermo: #{self.address}] #{message}"
+        HAIthermo.log_info "(t: #{self.address}) #{message}"
       end
       
       def action_debug(message)
-        HAIthermo.log_debug "[thermo: #{self.address}] #{message}"
+        HAIthermo.log_debug "(t: #{self.address}) #{message}"
       end
 
     end

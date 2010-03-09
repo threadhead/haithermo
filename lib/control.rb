@@ -43,8 +43,8 @@ module  HAIthermo
 
 
 
-    def add_thermostat(address)
-      @thermostats << HAIthermo::Thermostat::Base.new(self, address)
+    def add_thermostat(address, name)
+      @thermostats << HAIthermo::Thermostat::Base.new(self, address, name)
     end
     
     def thermostat(address)

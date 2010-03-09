@@ -8,15 +8,16 @@ module HAIthermo
     class BaseError < StandardError; end
   
     class Base
-      attr_reader :registers
+      attr_reader :registers, :name
 
       extend HAIthermo::Thermostat::DisplayOptions
       extend HAIthermo::Thermostat::OutputStatus
       include HAIthermo::Thermostat::Actions
 
       
-      def initialize(my_control, thermo_address)
+      def initialize(my_control, thermo_address, name)
         @my_control = my_control
+        @name = name
         @registers = HAIthermo::Thermostat::Register.new( thermo_address )
       end
     
