@@ -1,12 +1,20 @@
 require 'hai_thermo'
 require 'pp'
-# require 'logger'
+require 'logger'
 
 puts HAIthermo.version
 
-sp = HAIthermo::Control.new(:debug => true,
-                            :log_file => File.join(File.dirname(__FILE__), 'haithermo.log'),
-                            :log_level => Logger::DEBUG )
+sp = HAIthermo::Control.new
+
+logger = Logger.new(File.join(File.dirname(__FILE__), 'haithermo.log'))
+logger.level = Logger::DEBUG
+logger.formatter = proc { |severity, datetime, progname, msg|
+    "[#{datetime.strftime("%d %b %H:%M:%S.%2N")}] #{msg}\n"
+  }                   
+sp.logger << logger
+
+sp.logger << Logger.new($stdout)
+
 sp.open
 sp.add_thermostat(1)
 puts HAIthermo::Thermostat::Base.instance_methods.sort

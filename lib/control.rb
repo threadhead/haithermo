@@ -1,6 +1,6 @@
 require 'rubygems'
-require 'pp'
-require 'serialport'
+# require 'pp'
+# require 'serialport'
 # Kernel::require 'serialport'
 
 
@@ -11,12 +11,13 @@ rescue
 end
 
 module  HAIthermo
-  %w(thermostat message_factory logger).each do |file|
+  %w(thermostat message_factory).each do |file|
     require File.join(File.dirname(__FILE__), "#{file}")
   end
  
  
   class Control
+    attr_accessor :loggers
     
     #the port settings are fixed and should not be changes per HAI Thermostats API
     BAUD_RATE = 300
@@ -26,7 +27,7 @@ module  HAIthermo
     
 
     def initialize(options={})
-      HAIthermo::MyLogger.new(options[:log_file], options[:log_level])
+      @loggers = Array(options[:logger])
       # @debug = options[:debug] ? options[:debug] : false
       @thermostats = []
     end
@@ -54,6 +55,10 @@ module  HAIthermo
       @thermostats.detect{ |thermo| thermo.address == address }
     end
     
+    def thermostats(message, *args)
+      @thermostats.each{ |thermo| thermo.send(message, *args) }
+    end
+    
     def destroy_thermostat(address)
       @thermostats.delete_if{ |thermo| thermo.address == address }
     end
@@ -61,7 +66,7 @@ module  HAIthermo
 
 
     def send(send_string)
-      HAIthermo.logger.debug ">>> #{MessageFactory.to_hex_string send_string}"
+      self.log_debug ">>> #{MessageFactory.to_hex_string send_string}"
       @sp.write send_string
       sleep(0.2)
     end
@@ -75,8 +80,20 @@ module  HAIthermo
           # sleep(0.1)
         end
       end until get_buffer.nil?
-      HAIthermo.logger.debug "<<< #{MessageFactory.to_hex_string(buffer) unless buffer.nil?}"
+      self.log_debug "<<< #{MessageFactory.to_hex_string(buffer) unless buffer.nil?}"
       buffer
+    end
+    
+    def log_info(message)
+      @loggers.each{ |logger| logger.info message }
+    end
+    
+    def log_debug(message)
+      @loggers.each{ |logger| logger.debug message }
+    end
+
+    def logger=(logger)
+      @loggers = Array(logger)
     end
 
     
