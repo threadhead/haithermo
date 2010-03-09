@@ -60,11 +60,19 @@ module HAIthermo
         when 50 then "RC-122"
         end
       end
+      
+      def actual_temperature_f
+        self.omnistat_to_c( self.actual_temperature )
+      end
 
 
     
       def omnistat_to_c(temp_o)
         -40.0 + ( temp_o * 0.5 )
+      end
+      
+      def omnistat_to_f(temp_o)
+        self.c_to_f( self.omnistat_to_c(temp_o) )
       end
 
       def c_to_omnistat(temp_c)
