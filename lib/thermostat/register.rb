@@ -83,8 +83,9 @@ module HAIthermo
       def register_values_hash
         register_values = { :updated_at  => Time.now }
         @registers.each do |register|
-          register_values.merge!( { register.to_sym => register[:value] } )
-        end        
+          register_values.merge!( { register[:name].to_sym => register[:value] } )
+        end
+        return register_values    
       end
     
     

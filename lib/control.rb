@@ -1,7 +1,5 @@
 require 'rubygems'
 # require 'pp'
-# require 'serialport'
-# Kernel::require 'serialport'
 
 
 begin
@@ -14,11 +12,9 @@ module  HAIthermo
   %w(thermostat message_factory).each do |file|
     require File.join(File.dirname(__FILE__), "#{file}")
   end
+   
  
- 
-  class Control
-    attr_accessor :loggers
-    
+  class Control    
     #the port settings are fixed and should not be changes per HAI Thermostats API
     BAUD_RATE = 300
     DATA_BITS = 8
@@ -26,22 +22,22 @@ module  HAIthermo
     PARITY = SerialPort::NONE
     
 
-    def initialize(options={})
-      @loggers = Array(options[:logger])
+    def initialize(opts={})
+      HAIthermo.loggers = opts[:logger] ? Array(opts[:logger]) : []
       # @debug = options[:debug] ? options[:debug] : false
       @thermostats = []
     end
     
 
     def open(port="/dev/ttyS0")
-      HAIthermo.logger.info "OPEN SERIAL PORT (#{port}, #{BAUD_RATE}, #{DATA_BITS}, #{STOP_BITS}, #{PARITY})"
+      HAIthermo.log_info "OPEN SERIAL PORT (#{port}, #{BAUD_RATE}, #{DATA_BITS}, #{STOP_BITS}, #{PARITY})"
       @sp = SerialPort.new(port, BAUD_RATE, DATA_BITS, STOP_BITS, PARITY)
       @sp.read_timeout = 100
       # puts 'read_timeout: ' + @sp.read_timeout.to_s
     end
 
     def close
-      HAIthermo.logger.info "CLOSE SERIAL PORT"
+      HAIthermo.log_info "CLOSE SERIAL PORT"
       @sp.close if @sp
     end
 
@@ -66,7 +62,7 @@ module  HAIthermo
 
 
     def send(send_string)
-      self.log_debug ">>> #{MessageFactory.to_hex_string send_string}"
+      HAIthermo.log_debug ">>> #{MessageFactory.to_hex_string send_string}"
       @sp.write send_string
       sleep(0.2)
     end
@@ -80,20 +76,8 @@ module  HAIthermo
           # sleep(0.1)
         end
       end until get_buffer.nil?
-      self.log_debug "<<< #{MessageFactory.to_hex_string(buffer) unless buffer.nil?}"
+      HAIthermo.log_debug "<<< #{MessageFactory.to_hex_string(buffer) unless buffer.nil?}"
       buffer
-    end
-    
-    def log_info(message)
-      @loggers.each{ |logger| logger.info message }
-    end
-    
-    def log_debug(message)
-      @loggers.each{ |logger| logger.debug message }
-    end
-
-    def logger=(logger)
-      @loggers = Array(logger)
     end
 
     
