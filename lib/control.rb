@@ -40,7 +40,9 @@ module  HAIthermo
       @sp.close if @sp
     end
 
-
+    def thermostats
+      @thermostats
+    end
 
     def add_thermostat(address, name)
       @thermostats << HAIthermo::Thermostat::Base.new(self, address, name)
@@ -50,7 +52,7 @@ module  HAIthermo
       @thermostats.detect{ |thermo| thermo.address == address }
     end
     
-    def thermostats(message, *args)
+    def thermostats_do(message, *args)
       @thermostats.each{ |thermo| thermo.send(message, *args) }
     end
     
@@ -61,7 +63,7 @@ module  HAIthermo
 
 
     def send(send_string)
-      HAIthermo.log_debug ">>> #{MessageFactory.to_hex_string send_string}"
+      HAIthermo.log_debug "--> #{MessageFactory.to_hex_string send_string}"
       @sp.write send_string
       sleep(0.2)
     end
@@ -75,7 +77,7 @@ module  HAIthermo
           # sleep(0.1)
         end
       end until get_buffer.nil?
-      HAIthermo.log_debug "<<< #{MessageFactory.to_hex_string(buffer) unless buffer.nil?}"
+      HAIthermo.log_debug "<-- #{MessageFactory.to_hex_string(buffer) unless buffer.nil?}"
       buffer
     end
 
