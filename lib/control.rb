@@ -23,8 +23,7 @@ module  HAIthermo
     
 
     def initialize(opts={})
-      HAIthermo.loggers = opts[:logger] ? Array(opts[:logger]) : []
-      # @debug = options[:debug] ? options[:debug] : false
+      HAIthermo.loggers = Array(opts[:logger]) if opts[:logger]
       @thermostats = []
     end
     

@@ -1,5 +1,7 @@
 module HAIthermo
   class << self; attr_accessor :loggers; end
+  
+  self.loggers = []
 
   def self.log_info(message)
     HAIthermo.loggers.each{ |logger| logger.info message }

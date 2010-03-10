@@ -4,7 +4,7 @@ module HAIthermo
   module Thermostat
     
     module OutputStatus
-      extend HAIthermo::Thermostat::RegisterBits
+      include HAIthermo::Thermostat::RegisterBits
       OUTPUT_STATUS_REGISTER = 0x48
       
       # def status_heat

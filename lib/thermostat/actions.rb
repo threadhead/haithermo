@@ -105,11 +105,15 @@ module HAIthermo
 
       private
       def action_info(message)
-        HAIthermo.log_info "(t: #{self.address}) #{message}"
+        HAIthermo.log_info( action_message(message) )
       end
       
       def action_debug(message)
-        HAIthermo.log_debug "(t: #{self.address}) #{message}"
+        HAIthermo.log_debug( action_message(message) )
+      end
+      
+      def action_message(message)
+        "(t:#{self.address}) #{message}"
       end
 
     end

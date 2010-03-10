@@ -11,7 +11,7 @@ module HAIthermo
       attr_reader :registers, :name
 
       extend HAIthermo::Thermostat::DisplayOptions
-      extend HAIthermo::Thermostat::OutputStatus
+      include HAIthermo::Thermostat::OutputStatus
       include HAIthermo::Thermostat::Actions
 
       
@@ -40,7 +40,6 @@ module HAIthermo
                             ).assemble_packet )
         mf = MessageFactory.new.new_incoming_message( @my_control.read )
         # should get back an ACK
-        # @registers.set_value_range_string(mf.data) if mf
       end
       
      
@@ -62,7 +61,7 @@ module HAIthermo
       end
       
       def actual_temperature_f
-        self.omnistat_to_c( self.actual_temperature )
+        self.omnistat_to_f( @registers.actual_temperature )
       end
 
 
@@ -80,11 +79,11 @@ module HAIthermo
       end
             
       def f_to_c(temp_f)
-        ( temp_f - 32 ) * 5 / 9.0
+        (( temp_f - 32 ) * 5 / 9.0).round(1)
       end
       
       def c_to_f(temp_c)
-        ( 9.0 / 5 * temp_c ) + 32.0
+        (( 9.0 / 5 * temp_c ) + 32.0).round
       end
 
     end
