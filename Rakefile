@@ -4,7 +4,7 @@ require 'rake'
 begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
-    gem.name = "HAIthermo"
+    gem.name = "haithermo"
     gem.summary = "A ruby library that implements the HAI Omnistat Thermostat protocol"
     gem.description = "A ruby library that implements the HAI Omnistat Thermostat protocol"
     gem.email = "threadhead@gmail.com"
