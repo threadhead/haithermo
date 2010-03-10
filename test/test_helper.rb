@@ -1,4 +1,9 @@
+require 'rubygems'
 require 'test/unit'
-require 'hai_thermo'
 require 'pp'
 require 'mocha'
+
+require 'hai_thermo'
+
+class Test::Unit::TestCase
+end
