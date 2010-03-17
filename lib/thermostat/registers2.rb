@@ -2,20 +2,36 @@ module HAIthermo
   module Thermostat
     module Registers
       
+      class RegisterError < StandardError; end
+      
       def self.extended(base)
         base.instance_variable_set(:@registers, Array.new)
       end
       
       def initialize(address)
         create_registers
-        # create_accessors
-        set_value(0, address)
+        create_accessors
+        @registers.register_named(:address).value = address
       end
       
-      def get_register_by_name(name)
-        @registers.index{ |register| register.name == name }
+      # def [](name)
+      #   self.register_named( name.to_s )
+      # end
+      
+      
+      def register_named(name)
+        idx = @registers.index{ |register| register.name == name.to_s }
+        raise RegisterError.new("requested register (#{name}) does not exist") unless idx
+        idx
       end
     
+
+      def register_number(number)
+        idx = @registers.index{ |register| register.number == number }
+        raise RegisterError.new("requested register (#{name}) does not exist") unless idx
+        idx
+      end
+
 
       # def set_value(register, value)
       #   # puts "set_value: #{register}, #{value}"
@@ -27,7 +43,9 @@ module HAIthermo
       def set_value_range(start_register, values)
         start_register -= 1
         values.each do |value|
-          self.set_value( (start_register += 1), value )
+          # self.set_value( (start_register += 1), value )
+          reg = register_number( start_register += 1 )
+          @registers[reg].value = value if reg
         end
       end
     
@@ -45,16 +63,18 @@ module HAIthermo
       #   @registers[register][:value]
       # end
     
-      def get_value_by_name(register_name)
-        idx = @registers.index{ |reg| reg[:name] == register_name }
-        @registers[idx][:value] if idx
-      end
+      # def get_value_by_name(register_name)
+      #   idx = @registers.index{ |reg| reg[:name] == register_name }
+      #   @registers[idx][:value] if idx
+      # end
     
       def get_value_range(start_register, quantity)
         start_register -= 1
         arr = []
         quantity.times do
-          arr << self.get_value( start_register += 1 )
+          # arr << self.get_value( start_register += 1 )
+          reg = self.register_number( start_register += 1 )
+          ( arr << @registers[reg].value ) if reg
         end
         arr
       end
@@ -91,7 +111,7 @@ module HAIthermo
       def register_values_hash
         register_values = { :updated_at  => Time.now }
         @registers.each do |register|
-          register_values.merge!( { register[:name].to_sym => register[:value] } )
+          register_values.merge!( { register.name.to_sym => register.value } )
         end
         return register_values    
       end
@@ -110,8 +130,8 @@ module HAIthermo
       def create_accessors
         @registers.each_with_index do |register|
           # self.instance_eval do
-            self.class.send(:define_method, "#{register.name}", proc{ self.get_value( "#{idx}".to_i ) })
-            self.class.send(:define_method, "#{register.name}=", proc{ |value| self.set_value( "#{idx}".to_i, value ) })
+            self.class.send(:define_method, "#{register.name}", proc{ self.register_named("#{register.name}").value })
+            self.class.send(:define_method, "#{register.name}=", proc{ |value| self.register_named("#{register.name}").value = value })
           # end
         end
       end
