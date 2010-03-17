@@ -9,7 +9,7 @@ sp = HAIthermo::Control.new
 logger = Logger.new(File.join(File.dirname(__FILE__), 'haithermo.log'))
 logger.level = Logger::DEBUG
 logger.formatter = proc { |severity, datetime, progname, msg|
-    "[#{datetime.strftime("%d %b %H:%M:%S.%2N")}] #{msg}\n"
+    "[#{datetime.strftime("%d %b%y %H:%M:%S.%2N")}] #{msg}\n"
   }                   
 sp.logger << logger
 

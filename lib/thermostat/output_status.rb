@@ -57,6 +57,10 @@ module HAIthermo
         end
       end
       
+      def output_status_updated_at
+        self.get_updated_at( OUTPUT_STATUS_REGISTER )
+      end
+      
       
     end
     
