@@ -1,6 +1,6 @@
 module HAIthermo
   module Thermostat
-    module Register
+    module Register2
       
       class Reserved < Base
         def initialize(number, name, limits)

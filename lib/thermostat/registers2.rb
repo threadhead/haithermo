@@ -4,14 +4,15 @@ module HAIthermo
       
       class RegisterError < StandardError; end
       
+            
       def self.extended(base)
         base.instance_variable_set(:@registers, Array.new)
       end
       
-      def initialize(address)
+      def register_initialize(address)
         create_registers
         create_accessors
-        @registers.register_named(:address).value = address
+        self.register_named(:address).value = address
       end
       
       # def [](name)
@@ -22,14 +23,14 @@ module HAIthermo
       def register_named(name)
         idx = @registers.index{ |register| register.name == name.to_s }
         raise RegisterError.new("requested register (#{name}) does not exist") unless idx
-        idx
+        @registers[idx]
       end
     
 
       def register_number(number)
         idx = @registers.index{ |register| register.number == number }
         raise RegisterError.new("requested register (#{name}) does not exist") unless idx
-        idx
+        @registers[idx]
       end
 
 
@@ -227,13 +228,13 @@ module HAIthermo
         registers.each_with_index do |register, idx|
           case register[:type]
           when :temp
-            @registers << HAIthermo::Thermostat::Register::Temperature.new(idx, register[:name], register[:limits])
+            @registers << HAIthermo::Thermostat::Register2::Temperature.new(idx, register[:name], register[:limits])
           when :reserved
-            @registers << HAIthermo::Thermostat::Register::Reserved.new(idx, register[:name], register[:limits])
+            @registers << HAIthermo::Thermostat::Register2::Reserved.new(idx, register[:name], register[:limits])
           when :time
-            @registers << HAIthermo::Thermostat::Register::Time.new(idx, register[:name], register[:limits])
+            @registers << HAIthermo::Thermostat::Register2::OmniTime.new(idx, register[:name], register[:limits])
           else
-            @registers << HAIthermo::Thermostat::Register::Base.new(idx, register[:name], register[:limits])
+            @registers << HAIthermo::Thermostat::Register2::Base.new(idx, register[:name], register[:limits])
           end
         end
         

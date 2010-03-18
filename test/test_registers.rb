@@ -88,12 +88,12 @@ class TestRegisters < Test::Unit::TestCase
   
   def test_getting_register_range_string
     @registers.set_value_range(21, [5, 6, 7])
-    assert_equal(21.chr + "\005\006\007", @registers.get_value_range_string(21, 3))
-    assert_equal(4, @registers.get_value_range_string(21, 3).length)
+    assert_equal("\005\006\007", @registers.get_value_range_string(21, 3))
+    assert_equal(3, @registers.get_value_range_string(21, 3).length)
     
     @registers.set_value_range(24, [12, 16, 27, 33])
-    assert_equal(24.chr+12.chr+16.chr+27.chr+33.chr, @registers.get_value_range_string(24, 4))
-    assert_equal(5, @registers.get_value_range_string(24, 4).length)    
+    assert_equal(12.chr+16.chr+27.chr+33.chr, @registers.get_value_range_string(24, 4))
+    assert_equal(4, @registers.get_value_range_string(24, 4).length)    
   end
   
   def test_getting_a_register_name

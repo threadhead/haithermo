@@ -1,6 +1,8 @@
+require 'time'
+
 module HAIthermo
   module Thermostat
-    module Register
+    module Register2
       class RegisterError < StandardError; end
   
       class Base

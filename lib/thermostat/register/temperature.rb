@@ -1,6 +1,6 @@
 module HAIthermo
   module Thermostat
-    module Register
+    module Register2
       
       # A class to hold temperatures and handle conversion
       class Temperature < Base

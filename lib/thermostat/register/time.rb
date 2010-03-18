@@ -1,8 +1,8 @@
 module HAIthermo
   module Thermostat
-    module Register
+    module Register2
       
-      class Time < Base
+      class OmniTime < Base
         def initialize(number, name, limits)
           super(number, name, limits)
         end
