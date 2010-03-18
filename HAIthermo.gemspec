@@ -4,12 +4,12 @@
 # -*- encoding: utf-8 -*-
 
 Gem::Specification.new do |s|
-  s.name = %q{HAIthermo}
-  s.version = "0.0.1"
+  s.name = %q{haithermo}
+  s.version = "0.0.2"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Karl Smith"]
-  s.date = %q{2010-03-10}
+  s.date = %q{2010-03-18}
   s.description = %q{A ruby library that implements the HAI Omnistat Thermostat protocol}
   s.email = %q{threadhead@gmail.com}
   s.extra_rdoc_files = [
@@ -19,6 +19,7 @@ Gem::Specification.new do |s|
   s.files = [
     ".gitignore",
      "HAI Omnistat Serial Protocol r4-98C.pdf",
+     "HAIthermo.gemspec",
      "LICENSE",
      "README.rdoc",
      "Rakefile",
@@ -63,12 +64,12 @@ Gem::Specification.new do |s|
   s.rubygems_version = %q{1.3.6}
   s.summary = %q{A ruby library that implements the HAI Omnistat Thermostat protocol}
   s.test_files = [
-    "test/test_message.rb",
+    "test/test_fixnum_bits.rb",
      "test/test_helper.rb",
+     "test/test_message.rb",
      "test/test_message_factory.rb",
      "test/test_registers.rb",
-     "test/test_thermostat_base.rb",
-     "test/test_fixnum_bits.rb"
+     "test/test_thermostat_base.rb"
   ]
 
   if s.respond_to? :specification_version then
