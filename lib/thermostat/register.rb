@@ -132,91 +132,9 @@ module HAIthermo
       
       
       def initialize_registers
-        @registers = [
-                      { :name => 'address', :limits => (1..127) },
-                      { :name => 'communication_mode', :limits => [0, 1, 8, 24] },
-                      { :name => 'system_options', :limits => (0..127) },
-                      { :name => 'display_options', :limits => (0..127) },
-                      { :name => 'calibration_offset', :limits => (0..59) },
-                      { :name => 'cool_setpoint_low_limit', :limits => (0..255), :type => :temp },
-                      { :name => 'heat_setpoint_high_limit', :limits => (0..255), :type => :temp },
-                      { :name => 'reserved_07', :limits => [] },
-                      { :name => 'reserved_08', :limits => [] },
-                      { :name => 'cooling_anticipator', :limits => (0..30) },
-                      { :name => 'heating_anticipator', :limits => (0..30) },
-                      { :name => 'cooling_cycle_time', :limits => (2..30) },
-                      { :name => 'heating_cycle_time', :limits => (2..30) },
-                      { :name => 'aux_heat_diff', :limits => (0..127) },
-                      { :name => 'clock_adjust', :limits => (1..59) },
-                      { :name => 'days_remaining_filter_reminder', :limits => (0..127) },
-                      { :name => 'system_run_time_current_week', :limits => (0..127) },
-                      { :name => 'system_run_time_last_week', :limits => (0..127) },
-                    
-                        #only used in models with real time pricing
-                      { :name => 'real_time_pricing_setback_mid', :limits => (0..127) },
-                      { :name => 'real_time_pricing_setback_high', :limits => (0..127) },
-                      { :name => 'real_time_pricing_setback_critical', :limits => (0..127) },
-                    
-                        # programming registers
-                      { :name => 'weekday_morning_time', :limits => (0..255) },
-                      { :name => 'weekday_morning_cool_setpoint', :limits => (0..255), :type => :temp },
-                      { :name => 'weekday_morning_heat_setpoint', :limits => (0..255), :type => :temp },
-                      { :name => 'weekday_day_time', :limits => (0..255) },
-                      { :name => 'weekday_day_cool_setpoint', :limits => (0..255), :type => :temp },
-                      { :name => 'weekday_day_heat_setpoint', :limits => (0..255), :type => :temp },
-                      { :name => 'weekday_evening_time', :limits => (0..255) },
-                      { :name => 'weekday_evening_cool_setpoint', :limits => (0..255), :type => :temp },
-                      { :name => 'weekday_evening_heat_setpoint', :limits => (0..255), :type => :temp },
-                      { :name => 'weekday_night_time', :limits => (0..255) },
-                      { :name => 'weekday_night_cool_setpoint', :limits => (0..255), :type => :temp },
-                      { :name => 'weekday_night_heat_setpoint', :limits => (0..255), :type => :temp },
-
-                      { :name => 'saturday_morning_time', :limits => (0..255) },
-                      { :name => 'saturday_morning_cool_setpoint', :limits => (0..255), :type => :temp },
-                      { :name => 'saturday_morning_heat_setpoint', :limits => (0..255), :type => :temp },
-                      { :name => 'saturday_day_time', :limits => (0..255) },
-                      { :name => 'saturday_day_cool_setpoint', :limits => (0..255), :type => :temp },
-                      { :name => 'saturday_day_heat_setpoint', :limits => (0..255), :type => :temp },
-                      { :name => 'saturday_evening_time', :limits => (0..255) },
-                      { :name => 'saturday_evening_cool_setpoint', :limits => (0..255), :type => :temp },
-                      { :name => 'saturday_evening_heat_setpoint', :limits => (0..255), :type => :temp },
-                      { :name => 'saturday_night_time', :limits => (0..255) },
-                      { :name => 'saturday_night_cool_setpoint', :limits => (0..255), :type => :temp },
-                      { :name => 'saturday_night_heat_setpoint', :limits => (0..255), :type => :temp },
-                      
-                      { :name => 'sunday_morning_time', :limits => (0..255) },
-                      { :name => 'sunday_morning_cool_setpoint', :limits => (0..255), :type => :temp },
-                      { :name => 'sunday_morning_heat_setpoint', :limits => (0..255), :type => :temp },
-                      { :name => 'sunday_day_time', :limits => (0..255) },
-                      { :name => 'sunday_day_cool_setpoint', :limits => (0..255), :type => :temp },
-                      { :name => 'sunday_day_heat_setpoint', :limits => (0..255), :type => :temp },
-                      { :name => 'sunday_evening_time', :limits => (0..255) },
-                      { :name => 'sunday_evening_cool_setpoint', :limits => (0..255), :type => :temp },
-                      { :name => 'sunday_evening_heat_setpoint', :limits => (0..255), :type => :temp },
-                      { :name => 'sunday_night_time', :limits => (0..255) },
-                      { :name => 'sunday_night_cool_setpoint', :limits => (0..255), :type => :temp },
-                      { :name => 'sunday_night_heat_setpoint', :limits => (0..255), :type => :temp },
-                    
-                      { :name => 'reserved_57', :limits => [] },
-                    
-                      { :name => 'day_of_week', :limits => (0..6) },
-                      { :name => 'cool_setpoint', :limits => (0..255), :type => :temp },
-                      { :name => 'heat_setpoint', :limits => (0..255), :type => :temp },
-                      { :name => 'thermostat_mode', :limits => (0..4) },
-                      { :name => 'fan_status', :limits => (0..1) },
-                      { :name => 'hold', :limits => [0, 255] },
-                    
-                      { :name => 'actual_temperature', :limits => (0..255), :type => :temp },
-                      { :name => 'seconds', :limits => (0..59) },
-                      { :name => 'minutes', :limits => (0..59) },
-                      { :name => 'hours', :limits => (0..23) },
-                      { :name => 'outside_temperature', :limits => (0..255), :type => :temp },
-                      { :name => 'reserved', :limits => [] },
-                      { :name => 'real_time_pricing_mode', :limits => (0..3) },
-                      { :name => 'current_mode', :limits => (0..2) },
-                      { :name => 'output_status', :limits => (0..255) },
-                      { :name => 'model_of_thermostat', :limits => (0..255) }
-                      ]
+        require 'yaml'
+        @registers = YAML::load_file(File.join(File.dirname(__FILE__), "registers.yml"))
+       
         timestamp = Time.new
         @registers.each do |reg|
           reg.merge!({ :value => 0, :updated_at => timestamp })
