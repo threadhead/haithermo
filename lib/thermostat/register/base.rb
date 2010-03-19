@@ -2,7 +2,7 @@ require 'time'
 
 module HAIthermo
   module Thermostat
-    module Register2
+    module Register
       class RegisterError < StandardError; end
   
       class Base

@@ -1,6 +1,6 @@
 module HAIthermo
   module Thermostat
-    module Register2
+    module Register
       
       class OmniTime < Base
         def initialize(number, name, limits)
