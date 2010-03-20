@@ -3,7 +3,7 @@ require 'test/test_helper'
 
 class TestRegisterRealTimePricingMode < Test::Unit::TestCase
   def setup
-    @register = HAIthermo::Thermostat::Register::ReadTimePricingMode.new(0, "rea_time_pricing_mode", (0..3))
+    @register = HAIthermo::Thermostat::Register::RealTimePricingMode.new(0, "rea_time_pricing_mode", (0..3))
   end
   
   def test_real_time_pricing_mode

@@ -2,7 +2,7 @@ module HAIthermo
   module Thermostat
     module Register
       
-      class ReadTimePricingMode < Base
+      class RealTimePricingMode < Base
         MODES = %w(low mid high critical)
         
         def initialize(number, name, limits)

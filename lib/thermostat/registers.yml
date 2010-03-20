@@ -435,7 +435,7 @@
   :number: 70
   :name: real_time_pricing_mode
   :limits: !ruby/range 0..3
-  :type:
+  :type: :real_time_pricing_mode
     
 -
   :number: 71
