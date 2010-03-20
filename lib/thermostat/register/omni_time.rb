@@ -25,7 +25,7 @@ module HAIthermo
         def time=(datetime)
           begin
             if datetime.is_a?(String)
-              dt_parse = DateTime.parse(dattime)
+              dt_parse = DateTime.parse(datetime)
             else
               dt_parse = datetime
             end
