@@ -1,4 +1,4 @@
-require 'lib/thermostat/register/register_bits'
+require 'lib/thermostat/register/fixnum_bits'
 
 module HAIthermo
   module Thermostat
@@ -9,45 +9,91 @@ module HAIthermo
           super(number, name, limits)
         end
         
-        def display_options
-          self
+        
+        def fahrenheit
+          @value = @value.bit_set( 0 )
         end
         
-        extend HAIthermo::Thermostat::RegisterBits
-        DISPLAY_OPTIONS_REGISTER = 0X03
-
-        def display_fahrenheit
-          self.set_register_bit( DISPLAY_OPTIONS_REGISTER, 0 )
+        # because people can't spell fahrenheit!
+        def farenheit
+          self.fahrenheit
         end
 
-        def display_celsius
-          self.clear_register_bit( DISPLAY_OPTIONS_REGISTER, 0 )
+        def celsius
+          @value = @value.bit_clear( 0 )
         end
-
-        def display_24h
-          self.set_register_bit( DISPLAY_OPTIONS_REGISTER, 1 )
-        end
-
-        def display_ampm
-          self.clear_register_bit( DISPLAY_OPTIONS_REGISTER, 1 )
-        end
-
-        def display_hide_time_filter
-          self.set_register_bit( DISPLAY_OPTIONS_REGISTER, 4 )
-        end
-
-        def display_show_time_filer
-          self.clear_register_bit( DISPLAY_OPTIONS_REGISTER, 4 )
+        
+        # becuase people can't spell celsius!
+        def celcius
+          self.celsius
         end
 
         def fahrenheit?
-          self.get_register_bit( DISPLAY_OPTIONS_REGISTER, 0 ) == 1
+          @value.bit_get(0) == 1
         end
 
         def celsius?
-          self.get_register_bit( DISPLAY_OPTIONS_REGISTER, 0 ) == 0
+          @value.bit_get(0) == 0
+        end
+
+
+
+
+        def time_24h
+          @value = @value.bit_set( 1 )
+        end
+
+        def time_ampm
+          @value = @value.bit_clear( 1 )
+        end
+
+        def time_24h?
+          @value.bit_get( 1 ) == 1
         end
         
+        def time_ampm?
+          @value.bit_get( 1 ) == 0
+        end
+
+
+
+        def hide_filter_time
+          @value = @value.bit_set( 4 )
+        end
+
+        def show_filter_time
+          @value = @value.bit_clear( 4 )
+        end
+        
+        def filter_time?
+          @value.bit_get( 4 ) == 0
+        end
+
+
+        def programmable
+          @value = @value.bit_clear( 2 )
+        end
+        
+        def non_programmable
+          @value = @value.bit_set( 2 )
+        end
+        
+        def programmable?
+          @value.bit_get( 2 ) == 0  
+        end
+
+
+        def rtp_off
+          @value = @value.bit_clear( 3 )
+        end
+        
+        def rtp_on
+          @value = @value.bit_set( 3 )
+        end
+        
+        def rtp?
+          @value.bit_get( 3 ) == 1  
+        end
         
       end
     end
