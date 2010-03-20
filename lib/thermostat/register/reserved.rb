@@ -15,6 +15,11 @@ module HAIthermo
           {}
         end
         
+        def reserved?
+          true
+        end
+        
+        
       end
     end
   end

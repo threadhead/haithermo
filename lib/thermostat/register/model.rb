@@ -2,14 +2,11 @@ module HAIthermo
   module Thermostat
     module Register
       
-      class Model < ReadOnly
+      class Model < Base
         def initialize(number, name, limits)
           super(number, name, limits)
         end
         
-        def model_of_thermostat
-          self
-        end
         
         def model_name
           case self.value

@@ -11,10 +11,14 @@ class TestRegisterReserved < Test::Unit::TestCase
     assert @register.read_only?
   end
 
-  
-  def test_setting_value_raises_error
-    assert_raise(HAIthermo::Thermostat::Register::RegisterError) { @register.value = 3 }
+
+  def test_reserved_is_true
+    assert @register.reserved?
   end
+  
+  # def test_setting_value_raises_error
+  #   assert_raise(HAIthermo::Thermostat::Register::RegisterError) { @register.value = 3 }
+  # end
 
   
   def test_getting_value_raises_error
