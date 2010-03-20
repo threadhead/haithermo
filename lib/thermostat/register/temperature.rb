@@ -8,37 +8,69 @@ module HAIthermo
 
         def initialize(number, name, limits, temp=0, scale="omni")
           super(number, name, limits)
+          # puts "temp_o: #{temp}, scale: #{scale.to_s[0].downcase}"
           
-          case scale.downcase
+          case scale.to_s[0].downcase
           when 'c'
             @temp_c = temp
-            @temp_o = c_to_omnistat(temp)
+            @value = c_to_omnistat(temp)
           when 'f'
             @temp_f = temp
-            @temp_o = c_to_omnistat( f_to_c(temp) )
+            @value = c_to_omnistat( f_to_c(temp) )
           # when 'k'
           #   @temp_k = temp
-          when 'omni', "o"
-            @temp_o = temp
+          when 'o'
+            @value = temp
           end
         end
 
+
         def to_f
-          @temp_f ||= omnistat_to_f( self.temp_o)
+          @temp_f ||= omnistat_to_f( @value)
+        end
+        
+        def f
+          self.to_f
+        end
+        
+        def farenheit
+          self.to_f
         end
 
+
         def to_c
-          @temp_c ||= omnistat_to_c( self.temp_o )
+          @temp_c ||= omnistat_to_c( @value )
+        end
+        
+        def c
+          self.to_c
+        end
+        
+        def celcius
+          self.to_c
+        end
+        
+        
+        def to_o
+          @value
+        end
+        
+        def o
+          @value
+        end
+        
+        def omni
+          @value
         end
 
 
         def to_s(degree_sym='')
-          case @default_scale.downcase
+          case @default_scale[0].downcase
           when 'c'
             to_s_c(degree_sym)
           when 'f'
             to_s_f(degree_sym)
-          when 'omni', 'o'
+          when 'o'
             to_s_o(degree_sym)
           else
             to_s_f(degree_sym)
@@ -55,7 +87,7 @@ module HAIthermo
         end
 
         def to_s_o(degree_sym='')
-          sprintf( "%d", @temp_c ) + degree_sym + 'Omni'
+          sprintf( "%d", @value ) + degree_sym + 'Omni'
         end
 
 
