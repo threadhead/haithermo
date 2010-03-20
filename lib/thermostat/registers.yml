@@ -381,13 +381,13 @@
   :number: 61
   :name: thermostat_mode
   :limits: !ruby/range 0..4
-  :type:
+  :type: :thermostat_mode
     
 -
   :number: 62
   :name: fan_status
   :limits: !ruby/range 0..1
-  :type:
+  :type: :fan_status
     
 -
   :number: 63
