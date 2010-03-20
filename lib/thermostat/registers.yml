@@ -28,8 +28,8 @@
 -
   :number: 4
   :name: calibration_offset
-  :limits: !ruby/range 0..59
-  :type:
+  :limits: !ruby/range 1..59
+  :type: :calibration_offset
 
 -
   :number: 5
@@ -89,7 +89,7 @@
   :number: 14
   :name: clock_adjust
   :limits: !ruby/range 1..59
-  :type:
+  :type: :clock_adjust
 
 -
   :number: 15

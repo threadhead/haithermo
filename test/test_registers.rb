@@ -19,7 +19,7 @@ class TestRegisters < Test::Unit::TestCase
   
   def test_register_named_returns_a_register
     assert_same(HAIthermo::Thermostat::Register::Base, @thermo.register_named(:address).class)
-    assert_same(HAIthermo::Thermostat::Register::Base, @thermo.register_named(:clock_adjust).class)
+    assert_same(HAIthermo::Thermostat::Register::ClockAdjust, @thermo.register_named(:clock_adjust).class)
     assert_same(HAIthermo::Thermostat::Register::OmniTime, @thermo.register_named(:weekday_morning_time).class)
     assert_same(HAIthermo::Thermostat::Register::Temperature, @thermo.register_named(:weekday_morning_cool_setpoint).class)
     assert_same(HAIthermo::Thermostat::Register::OutputStatus, @thermo.register_named(:output_status).class)
@@ -35,7 +35,7 @@ class TestRegisters < Test::Unit::TestCase
   
   def test_register_number_returns_a_register
     assert_same(HAIthermo::Thermostat::Register::Base, @thermo.register_number(0).class)
-    assert_same(HAIthermo::Thermostat::Register::Base, @thermo.register_number(14).class)
+    assert_same(HAIthermo::Thermostat::Register::ClockAdjust, @thermo.register_number(14).class)
     assert_same(HAIthermo::Thermostat::Register::OmniTime, @thermo.register_number(21).class)
     assert_same(HAIthermo::Thermostat::Register::Temperature, @thermo.register_number(22).class)
     assert_same(HAIthermo::Thermostat::Register::OutputStatus, @thermo.register_number(72).class)
