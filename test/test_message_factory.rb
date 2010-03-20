@@ -53,21 +53,21 @@ class TestMessageFactory < Test::Unit::TestCase
   def test_creating_receive_ACK_message
     test_string = @mf.hex_string_to_string("82 00 82")
     test_message = @msg_fac.new_incoming_message(test_string)
-    assert_kind_of(HAIthermo::ReceiveACK, test_message)
+    assert_kind_of(HAIthermo::Message::ReceiveACK, test_message)
   end
   
   
   def test_creating_receive_NACK_message
     test_string = @mf.hex_string_to_string("82 01 83")
     test_message = @msg_fac.new_incoming_message(test_string)
-    assert_kind_of(HAIthermo::ReceiveNACK, test_message)
+    assert_kind_of(HAIthermo::Message::ReceiveNACK, test_message)
   end
   
   
   def test_creating_receive_data_message
     test_string = @mf.hex_string_to_string("82 32 0d 04 05 ca")
     test_message = @msg_fac.new_incoming_message(test_string)
-    assert_kind_of(HAIthermo::ReceiveData, test_message)
+    assert_kind_of(HAIthermo::Message::ReceiveData, test_message)
     assert_equal(13, test_message.start_register)
     assert_equal(2, test_message.register_count)
     assert_equal(4, test_message.get_register_value(13))
@@ -78,7 +78,7 @@ class TestMessageFactory < Test::Unit::TestCase
   def test_creating_received_group1_data_message
     test_string = @mf.hex_string_to_string("83 63 04 05 06 07 08 09 0d")
     test_message = @msg_fac.new_incoming_message(test_string)
-    assert_kind_of(HAIthermo::ReceiveGroup1Data, test_message)
+    assert_kind_of(HAIthermo::Message::ReceiveGroup1Data, test_message)
     assert_equal(4, test_message.cool_setpoint)
     assert_equal(5, test_message.heat_setpoint)
     assert_equal(6, test_message.mode)
@@ -91,7 +91,7 @@ class TestMessageFactory < Test::Unit::TestCase
   def test_creating_received_group2_data_message
     test_string = @mf.hex_string_to_string("83 14 04 9b")
     test_message = @msg_fac.new_incoming_message(test_string)
-    assert_kind_of(HAIthermo::ReceiveGroup2Data, test_message)
+    assert_kind_of(HAIthermo::Message::ReceiveGroup2Data, test_message)
   end
   
   

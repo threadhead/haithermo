@@ -12,10 +12,8 @@ module HAIthermo
           
           case scale.to_s[0].downcase
           when 'c'
-            @temp_c = temp
             @value = c_to_omnistat(temp)
           when 'f'
-            @temp_f = temp
             @value = c_to_omnistat( f_to_c(temp) )
           # when 'k'
           #   @temp_k = temp
@@ -26,29 +24,66 @@ module HAIthermo
 
 
         def to_f
-          @temp_f ||= omnistat_to_f( @value)
+          omnistat_to_f( @value)
         end
         
         def f
           self.to_f
         end
         
+        def fahrenheit
+          self.to_f
+        end
+        
+        # because people can't spell fahrenheit!
         def farenheit
           self.to_f
         end
 
+        def f=(temp_f)
+          @value = c_to_omnistat( f_to_c(temp_f))
+        end
+        
+        def fahrenheit=(temp_f)
+          self.f = temp_f
+        end
+        
+        # because people can't spell fahrenheit!
+        def farenheit=(temp_f)
+          self.f = temp_f
+        end
+
+
 
         def to_c
-          @temp_c ||= omnistat_to_c( @value )
+          omnistat_to_c( @value )
         end
         
         def c
           self.to_c
         end
         
+        def celsius
+          self.to_c
+        end
+        
+        # becuase people can't spell celsius!
         def celcius
           self.to_c
         end
+        
+        def c=(temp_c)
+          @value = c_to_omnistat(temp_c)
+        end
+        
+        def celsius=(temp_c)
+          self.c = temp_c
+        end
+        
+        def celcius=(temp_c)
+          self.c = temp_c
+        end
+        
         
         
         def to_o
@@ -62,6 +97,15 @@ module HAIthermo
         def omni
           @value
         end
+        
+        def o=(temp_o)
+          @value = temp_o
+        end
+        
+        def omni=(temp_o)
+          self.o = temp_o
+        end
+
 
 
         def to_s(degree_sym='')

@@ -21,17 +21,18 @@ module HAIthermo
       
 
       def get_registers_from_thermo(start_register, quantity)
-        @my_control.send( PollForRegisters.new( self.address, start_register, quantity ).assemble_packet )
-        mf = MessageFactory.new.new_incoming_message( @my_control.read )
-        @registers.set_value_range_string(mf.data) if mf
+        packet = PollForRegisters.new( self.address.value, start_register, quantity )
+        message = @my_control.send_packet( packet )
+        
+        @registers.set_value_range_string(message.data) if message
       end
       
+      
       def set_registers_from_thermo(start_register, quantity)
-        @my_control.send( SetRegisters.new( self.address,
+        packet = SetRegisters.new( self.address.value,
                             start_register,
-                            @registers.get_value_range_string(start_register, quantity)
-                            ).assemble_packet )
-        mf = MessageFactory.new.new_incoming_message( @my_control.read )
+                            @registers.get_value_range_string(start_register, quantity))
+        message = @my_control.send_packet( packet )
         # should get back an ACK
       end
       

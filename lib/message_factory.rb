@@ -1,12 +1,12 @@
-%w(base poll_for_registers poll_for_group1_data poll_for_group2_data set_registers receive_ACK receive_NACK receive_data receive_group1_data receive_group2_data).each do |file|
-  require File.join(File.dirname(__FILE__), 'messages', "#{file}")
-end
-
-
 module HAIthermo  
+  class ChecksumError < StandardError; end
+  class InvalidMessageType < StandardError; end
+  
   class MessageFactory
     # the message factory is responsible for managing the creating and routing
     # of message packets
+    
+    
     
     def new_incoming_message(packet)
       unless packet.nil? || packet.empty?
@@ -16,37 +16,24 @@ module HAIthermo
         if @valid
           case @message_type
           when 0
-            ReceiveACK.new(@thermo_address)
+            Message::ReceiveACK.new(@thermo_address)
           when 1
-            ReceiveNACK.new(@thermo_address)
+            Message::ReceiveNACK.new(@thermo_address)
           when 2
-            ReceiveData.new(@thermo_address, @data)
+            Message::ReceiveData.new(@thermo_address, @data)
           when 3
-            ReceiveGroup1Data.new(@thermo_address, @data)
+            Message::ReceiveGroup1Data.new(@thermo_address, @data)
           when 4
-            ReceiveGroup2Data.new(@thermo_address, @data)
+            Message::ReceiveGroup2Data.new(@thermo_address, @data)
+          else
+            raise InvalidMessageType.new "message type (#{@message_type} was not recognized)"
           end
         else
-          raise 'packet checksum did not validate'
+          raise ChecksumError.new "packet checksum did not validate"
         end
       end
     end
     
-    # def poll_for_registers(thermo_address, first_register, number_of_registers)
-    #   PollForRegisters.new(thermo_address, first_register, number_of_registers)
-    # end
-    # 
-    # def set_registers(thermo_address, start_register, data_bytes)
-    #   SetRegisters.new(thermo_address, start_register, data_bytes)
-    # end
-    # 
-    # def poll_for_group1_data(thermo_address)
-    #   PollForGroup1Data.new(thermo_address)
-    # end
-    # 
-    # def poll_for_group2_data(thermo_address)
-    #   PollForGroup2Data.new(thermo_address)
-    # end
     
     
     #breaks a packet(string) apart and assigns the attributes

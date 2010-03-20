@@ -19,6 +19,7 @@ module HAIthermo
           self.fahrenheit
         end
 
+
         def celsius
           @value = @value.bit_clear( 0 )
         end
@@ -27,6 +28,7 @@ module HAIthermo
         def celcius
           self.celsius
         end
+
 
         def fahrenheit?
           @value.bit_get(0) == 1

@@ -104,8 +104,6 @@ module HAIthermo
         @registers.each do |register|
           # self.instance_eval do
             self.class.send(:define_method, "#{register.name}", proc{ self.register_named("#{register.name}") })
-            # self.class.send(:define_method, "#{register.name}", proc{ self.register_named("#{register.name}").value })
-            # self.class.send(:define_method, "#{register.name}=", proc{ |value| self.register_named("#{register.name}").value = value })
           # end
         end
       end

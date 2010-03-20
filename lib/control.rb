@@ -1,6 +1,4 @@
 require 'rubygems'
-# require 'pp'
-
 
 begin
   require 'serialport'
@@ -9,7 +7,7 @@ rescue
 end
 
 module  HAIthermo
-  %w(thermostat message_factory).each do |file|
+  %w(thermostat message message_factory).each do |file|
     require File.join(File.dirname(__FILE__), "#{file}")
   end
    
@@ -40,6 +38,7 @@ module  HAIthermo
       @sp.close if @sp
     end
 
+
     def thermostats
       @thermostats
     end
@@ -62,13 +61,40 @@ module  HAIthermo
 
 
 
-    def send(send_string)
+    def send_packet(packet)
+      sent_times = 0
+      while sent_times < 4
+        begin
+          sent_times += 1
+          self.send_string(packet.to_s)
+          mf = MessageFactory.new.new_incoming_message( self.read_string )
+          sent_times = 99 unless mf.kind_of?(ReceiveNACK)
+          
+        rescue InvalidMessageType, ChecksumError
+          HAIthermo.log_error($!)
+        end        
+      end
+      
+      if sent_times >= 4
+        return false
+      else
+        return mf
+      end
+      
+    rescue
+      HAIthermo.log_error($!)
+      return false
+    end
+
+
+    def send_string(send_string)
       HAIthermo.log_debug "--> #{MessageFactory.to_hex_string send_string}"
       @sp.write send_string
       sleep(0.2)
     end
 
-    def read
+
+    def read_string
       buffer = ""
       begin
         get_buffer = @sp.gets
