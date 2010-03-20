@@ -393,7 +393,7 @@
   :number: 63
   :name: hold
   :limits: [0, 255]
-  :type:
+  :type: :hold
 
 -
   :number: 64

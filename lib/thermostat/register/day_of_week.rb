@@ -13,7 +13,7 @@ module HAIthermo
         end
         
         def wday=(day)
-          @value = DAYSOFWEEK.index(day)
+          @value = DAYSOFWEEK.index(day.to_s)
         end
         
       end
