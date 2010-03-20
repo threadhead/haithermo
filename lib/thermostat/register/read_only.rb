@@ -11,6 +11,10 @@ module HAIthermo
           raise RegisterError.new("can not set value of read only register (#{self.number})")
         end
         
+        def read_only?
+          true
+        end
+        
       end
     end
   end

@@ -6,7 +6,8 @@ module HAIthermo
       class RegisterError < StandardError; end
   
       class Base
-        attr_accessor :name, :number, :limits, :updated_at
+        attr_accessor :name, :number, :limits
+        attr_reader :updated_at
       
         def initialize(number, name, limits)
           @value = 0
@@ -14,12 +15,18 @@ module HAIthermo
           @name = name
           @limits = limits
           @number = number
+          self.validate_number_range
         end
+        
+        def read_only?
+          false
+        end
+        
         
         def value=(value)
           validate_value_limits(value)
           @value = value
-          set_timestamp
+          self.set_timestamp
         end
         
         def value
@@ -37,8 +44,6 @@ module HAIthermo
       
       
         def validate_value_limits(value)
-          self.validate_number_range
-      
           unless @limits.include?( value )
             raise RegisterError.new("register '#{@name}' not within allowable value range #{@limits}")
           end      

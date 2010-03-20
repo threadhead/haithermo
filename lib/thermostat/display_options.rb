@@ -1,5 +1,3 @@
-require File.join(File.dirname(__FILE__), 'register_bits')
-
 
 module HAIthermo
   module Thermostat

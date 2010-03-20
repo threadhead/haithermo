@@ -34,19 +34,11 @@ module HAIthermo
       end
 
 
-      # def set_value(register, value)
-      #   # puts "set_value: #{register}, #{value}"
-      #   self.validate_register_limits(register, value)
-      #   @registers[register][:value] = value
-      #   @registers[register][:updated_at] = Time.new
-      # end
     
       def set_value_range(start_register, values)
         start_register -= 1
         values.each do |value|
-          # self.set_value( (start_register += 1), value )
-          reg = register_number( start_register += 1 )
-          @registers[reg].value = value if reg
+          self.register_number( start_register += 1 ).value = value
         end
       end
     
@@ -57,25 +49,12 @@ module HAIthermo
     
         
         
-        
-      # def get_value(register)
-      #   # puts "geting_register_value: #{register}"
-      #   self.validate_register_range(register)
-      #   @registers[register][:value]
-      # end
-    
-      # def get_value_by_name(register_name)
-      #   idx = @registers.index{ |reg| reg[:name] == register_name }
-      #   @registers[idx][:value] if idx
-      # end
     
       def get_value_range(start_register, quantity)
         start_register -= 1
         arr = []
         quantity.times do
-          # arr << self.get_value( start_register += 1 )
-          reg = self.register_number( start_register += 1 )
-          ( arr << @registers[reg].value ) if reg
+          arr << self.register_number( start_register += 1 ).value
         end
         arr
       end
@@ -87,22 +66,6 @@ module HAIthermo
         str
       end
     
-      # def limits(register)
-      #   @registers[register][:limits]
-      # end
-    
-    
-    
-      # def get_name(register)
-      #   self.validate_register_range(register)
-      #   self.humanize( @registers[register][:name] )
-      # end
-    
-    
-      # def get_updated_at(register)
-      #    self.validate_register_range(register)
-      #    @registers[register][:updated_at]
-      #  end
 
 
       def register_names
@@ -124,15 +87,25 @@ module HAIthermo
         @registers.map { |register| puts "name: #{register.name}, value: #{register.value}" }
       end
 
-  
+      # shamelessly copied and adapted from ActiveSupport::Inflector
+      def camelize(lower_case_and_underscored_word)
+         lower_case_and_underscored_word.to_s.gsub(/\/(.?)/) { "::#{$1.upcase}" }.gsub(/(?:^|_)(.)/) { $1.upcase }
+      end
+
+
+      def constantize(lower_case_and_underscored_word)
+        name = camelize( lower_case_and_underscored_word )
+        HAIthermo::Thermostat::Register.const_defined?(name) ? HAIthermo::Thermostat::Register.const_get(name) : false
+      end
   
   
       private
       def create_accessors
-        @registers.each_with_index do |register|
+        @registers.each do |register|
           # self.instance_eval do
-            self.class.send(:define_method, "#{register.name}", proc{ self.register_named("#{register.name}").value })
-            self.class.send(:define_method, "#{register.name}=", proc{ |value| self.register_named("#{register.name}").value = value })
+            self.class.send(:define_method, "#{register.name}", proc{ self.register_named("#{register.name}") })
+            # self.class.send(:define_method, "#{register.name}", proc{ self.register_named("#{register.name}").value })
+            # self.class.send(:define_method, "#{register.name}=", proc{ |value| self.register_named("#{register.name}").value = value })
           # end
         end
       end
@@ -143,7 +116,7 @@ module HAIthermo
         registers = YAML::load_file(File.join(File.dirname(__FILE__), "registers.yml"))
         
         registers.each do |register|
-          klass = constantize(register[:type])
+          klass = register[:type] ? constantize(register[:type]) : false
           
           if klass
             @registers << klass.new(register[:number], register[:name], register[:limits])
@@ -151,36 +124,9 @@ module HAIthermo
             @registers << HAIthermo::Thermostat::Register::Base.new(register[:number], register[:name], register[:limits])
           end
         end
-          
-          
-        #   case register[:type]
-        #   when :temp
-        #     @registers << HAIthermo::Thermostat::Register::Temperature.new(idx, register[:name], register[:limits])
-        #   when :reserved
-        #     @registers << HAIthermo::Thermostat::Register::Reserved.new(idx, register[:name], register[:limits])
-        #   when :time
-        #     @registers << HAIthermo::Thermostat::Register::OmniTime.new(idx, register[:name], register[:limits])
-        #   else
-        #     @registers << HAIthermo::Thermostat::Register::Base.new(idx, register[:name], register[:limits])
-        #   end
-        # end
       end
       
-      # shamelessly copied and adapted from ActiveSupport::Inflector
-      def camelize(lower_case_and_underscored_word)
-         lower_case_and_underscored_word.to_s.gsub(/\/(.?)/) { "::#{$1.upcase}" }.gsub(/(?:^|_)(.)/) { $1.upcase }
-      end
-      
-      # shamelessly copied and adapted from ActiveSupport::Inflector
-      def classify(name)
-       # strip out any leading schema name
-       camelize( name.to_s.sub(/.*\./, '') )
-      end
-      
-      def constantize(lower_case_and_underscored_word)
-        name = classify( lower_case_and_underscored_word )
-        HAIthermo::Thermostat::Register.const_defined?(name) ? HAIthermo::Thermostat::Register.const_get(name) : false
-      end
+     
             
     end
   end

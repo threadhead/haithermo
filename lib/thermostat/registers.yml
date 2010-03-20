@@ -35,13 +35,13 @@
   :number: 5
   :name: cool_setpoint_low_limit
   :limits: !ruby/range 0..255
-  :type: :temp
+  :type: :temperature
 
 -
   :number: 6
   :name: heat_setpoint_high_limit
   :limits: !ruby/range 0..255
-  :type: :temp
+  :type: :temperature
 
 -
   :number: 7
@@ -116,19 +116,19 @@
   :number: 18
   :name: real_time_pricing_setback_mid
   :limits: !ruby/range 0..127
-  :type: :temp
+  :type: :temperature
 
 -
   :number: 19
   :name: real_time_pricing_setback_high
   :limits: !ruby/range 0..127
-  :type: :temp
+  :type: :temperature
 
 -
   :number: 20
   :name: real_time_pricing_setback_critical
   :limits: !ruby/range 0..127
-  :type: :temp
+  :type: :temperature
 
 
 
@@ -144,13 +144,13 @@
   :number: 22
   :name: weekday_morning_cool_setpoint
   :limits: !ruby/range 0..255
-  :type: :temp
+  :type: :temperature
 
 -
   :number: 23
   :name: weekday_morning_heat_setpoint
   :limits: !ruby/range 0..255
-  :type: :temp
+  :type: :temperature
 
 -
   :number: 24
@@ -162,13 +162,13 @@
   :number: 25
   :name: weekday_day_cool_setpoint
   :limits: !ruby/range 0..255
-  :type: :temp
+  :type: :temperature
 
 -
   :number: 26
   :name: weekday_day_heat_setpoint
   :limits: !ruby/range 0..255
-  :type: :temp
+  :type: :temperature
 
 -
   :number: 27
@@ -180,13 +180,13 @@
   :number: 28
   :name: weekday_evening_cool_setpoint
   :limits: !ruby/range 0..255
-  :type: :temp
+  :type: :temperature
 
 -
   :number: 29
   :name: weekday_evening_heat_setpoint
   :limits: !ruby/range 0..255
-  :type: :temp
+  :type: :temperature
 
 -
   :number: 30
@@ -198,13 +198,13 @@
   :number: 31
   :name: weekday_night_cool_setpoint
   :limits: !ruby/range 0..255
-  :type: :temp
+  :type: :temperature
 
 -
   :number: 32
   :name: weekday_night_heat_setpoint
   :limits: !ruby/range 0..255
-  :type: :temp
+  :type: :temperature
 
 
 -
@@ -217,13 +217,13 @@
   :number: 34
   :name: saturday_morning_cool_setpoint
   :limits: !ruby/range 0..255
-  :type: :temp
+  :type: :temperature
 
 -
   :number: 35
   :name: saturday_morning_heat_setpoint
   :limits: !ruby/range 0..255
-  :type: :temp
+  :type: :temperature
 
 -
   :number: 36
@@ -235,13 +235,13 @@
   :number: 37
   :name: saturday_day_cool_setpoint
   :limits: !ruby/range 0..255
-  :type: :temp
+  :type: :temperature
 
 -
   :number: 38
   :name: saturday_day_heat_setpoint
   :limits: !ruby/range 0..255
-  :type: :temp
+  :type: :temperature
 
 -
   :number: 39
@@ -253,13 +253,13 @@
   :number: 40
   :name: saturday_evening_cool_setpoint
   :limits: !ruby/range 0..255
-  :type: :temp
+  :type: :temperature
 
 -
   :number: 41
   :name: saturday_evening_heat_setpoint
   :limits: !ruby/range 0..255
-  :type: :temp
+  :type: :temperature
 
 -
   :number: 42
@@ -271,13 +271,13 @@
   :number: 43
   :name: saturday_night_cool_setpoint
   :limits: !ruby/range 0..255
-  :type: :temp
+  :type: :temperature
 
 -
   :number: 44
   :name: saturday_night_heat_setpoint
   :limits: !ruby/range 0..255
-  :type: :temp
+  :type: :temperature
 
 
 -
@@ -290,13 +290,13 @@
   :number: 46
   :name: sunday_morning_cool_setpoint
   :limits: !ruby/range 0..255
-  :type: :temp
+  :type: :temperature
 
 -
   :number: 47
   :name: sunday_morning_heat_setpoint
   :limits: !ruby/range 0..255
-  :type: :temp
+  :type: :temperature
 
 -
   :number: 48
@@ -308,13 +308,13 @@
   :number: 49
   :name: sunday_day_cool_setpoint
   :limits: !ruby/range 0..255
-  :type: :temp
+  :type: :temperature
 
 -
   :number: 50
   :name: sunday_day_heat_setpoint
   :limits: !ruby/range 0..255
-  :type: :temp
+  :type: :temperature
 
 -
   :number: 51
@@ -326,13 +326,13 @@
   :number: 52
   :name: sunday_evening_cool_setpoint
   :limits: !ruby/range 0..255
-  :type: :temp
+  :type: :temperature
 
 -
   :number: 53
   :name: sunday_evening_heat_setpoint
   :limits: !ruby/range 0..255
-  :type: :temp
+  :type: :temperature
 
 -
   :number: 54
@@ -344,13 +344,13 @@
   :number: 55
   :name: sunday_night_cool_setpoint
   :limits: !ruby/range 0..255
-  :type: :temp
+  :type: :temperature
 
 -
   :number: 56
   :name: sunday_night_heat_setpoint
   :limits: !ruby/range 0..255
-  :type: :temp
+  :type: :temperature
 
 
 -
@@ -369,13 +369,13 @@
   :number: 59
   :name: cool_setpoint
   :limits: !ruby/range 0..255
-  :type: :temp
+  :type: :temperature
 
 -
   :number: 60
   :name: heat_setpoint
   :limits: !ruby/range 0..255
-  :type: :temp
+  :type: :temperature
 
 -
   :number: 61
@@ -399,7 +399,7 @@
   :number: 64
   :name: actual_temperature
   :limits: !ruby/range 0..255
-  :type: :temp
+  :type: :temperature
 
 -
   :number: 65
@@ -423,7 +423,7 @@
   :number: 68
   :name: outside_temperature
   :limits: !ruby/range 0..255
-  :type: :temp
+  :type: :temperature
 
 -
   :number: 69
