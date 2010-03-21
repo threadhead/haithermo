@@ -49,10 +49,33 @@ class TestControl < Test::Unit::TestCase
     
     # @control.thermostats_do(:)
   end
-  
+
   
   def test_sending_a_string_to_the_serial_port
+    self.serialport_mock_setup
     
+    @sp_mock.expects(:gets).at_most(3).returns(82.chr+00.chr+82.chr, nil)    
+    assert_equal(82.chr+00.chr+82.chr, @control.read_string)
+    @sp_mock.expects(:gets).at_most(3).returns(81.chr+00.chr+81.chr, nil)    
+    assert_equal(81.chr+00.chr+81.chr, @control.read_string)
   end
   
+  
+  def test_receiving_an_invalid_message_type_raises_error
+    self.serialport_mock_setup
+    @sp_mock.stubs(:write)
+    HAIthermo.expects(:log_error).with(){|v| v.class == HAIthermo::InvalidMessageType}
+    @sp_mock.expects(:gets).at_most(3).returns(81.chr+05.chr+86.chr, nil)    
+    
+    @control.send_packet("asdf")
+  end
+  
+
+  protected
+  def serialport_mock_setup
+    @sp_mock = mock
+    @sp_mock.stubs(:read_timeout=)
+    SerialPort.expects(:new).returns(@sp_mock)
+    @control.open
+  end
 end

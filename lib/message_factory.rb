@@ -9,6 +9,7 @@ module HAIthermo
     
     
     def new_incoming_message(packet)
+      # puts "packet: #{packet}"
       unless packet.nil? || packet.empty?
         dissamble_packet(packet)
         # puts "valid: #{@valid}, mt: #{@message_type}"
@@ -26,7 +27,7 @@ module HAIthermo
           when 4
             Message::ReceiveGroup2Data.new(@thermo_address, @data)
           else
-            raise InvalidMessageType.new "message type (#{@message_type} was not recognized)"
+            raise InvalidMessageType.new "message type (#{@message_type}) was not recognized"
           end
         else
           raise ChecksumError.new "packet checksum did not validate"

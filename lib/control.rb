@@ -28,14 +28,14 @@ module  HAIthermo
 
     def open(port="/dev/ttyS0")
       HAIthermo.log_info "OPEN SERIAL PORT (#{port}, #{BAUD_RATE}, #{DATA_BITS}, #{STOP_BITS}, #{PARITY})"
-      @sp = SerialPort.new(port, BAUD_RATE, DATA_BITS, STOP_BITS, PARITY)
-      @sp.read_timeout = 100
-      # puts 'read_timeout: ' + @sp.read_timeout.to_s
+      @serialport = SerialPort.new(port, BAUD_RATE, DATA_BITS, STOP_BITS, PARITY)
+      @serialport.read_timeout = 100
+      # puts 'read_timeout: ' + @serialport.read_timeout.to_s
     end
 
     def close
       HAIthermo.log_info "CLOSE SERIAL PORT"
-      @sp.close if @sp
+      @serialport.close if @serialport
     end
 
 
@@ -68,9 +68,10 @@ module  HAIthermo
           sent_times += 1
           self.send_string(packet.to_s)
           mf = MessageFactory.new.new_incoming_message( self.read_string )
-          sent_times = 99 unless mf.kind_of?(ReceiveNACK)
+          sent_times = 99 unless mf.kind_of?(Message::ReceiveNACK)
           
         rescue InvalidMessageType, ChecksumError
+          # puts $!.inspect
           HAIthermo.log_error($!)
         end        
       end
@@ -81,15 +82,15 @@ module  HAIthermo
         return mf
       end
       
-    rescue
-      HAIthermo.log_error($!)
-      return false
+    # rescue
+    #   HAIthermo.log_error($!)
+    #   return false
     end
 
 
     def send_string(send_string)
       HAIthermo.log_debug "--> #{MessageFactory.to_hex_string send_string}"
-      @sp.write send_string
+      @serialport.write send_string
       sleep(0.2)
     end
 
@@ -97,7 +98,7 @@ module  HAIthermo
     def read_string
       buffer = ""
       begin
-        get_buffer = @sp.gets
+        get_buffer = @serialport.gets
         unless get_buffer.nil?
           buffer << get_buffer
           # sleep(0.1)
