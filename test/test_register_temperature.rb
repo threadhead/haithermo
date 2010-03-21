@@ -73,9 +73,6 @@ class TestRegisterTemperature < Test::Unit::TestCase
   
   
   def test_string_outputs_of_temperatures
-    assert_equal("20.0C", @register.to_s_c)
-    assert_equal("68F", @register.to_s_f)
-    assert_equal("120Omni", @register.to_s_o)
     @register.default_scale = :celsius
     assert_equal("20.0C", @register.to_s)
     @register.default_scale = :fahrenheit
@@ -83,11 +80,5 @@ class TestRegisterTemperature < Test::Unit::TestCase
     @register.default_scale = :omni
     assert_equal("120Omni", @register.to_s)
   end
-  
-  def test_string_outputs_with_degree_symbol
-    assert_equal("20.0degC", @register.to_s_c('deg'))
-    assert_equal("68degF", @register.to_s_f('deg'))
-    assert_equal("120degOmni", @register.to_s_o('deg'))
-  end
-  
+    
 end

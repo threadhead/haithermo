@@ -1,5 +1,6 @@
-require File.join(File.dirname(__FILE__), 'lib', 'control')
-require File.join(File.dirname(__FILE__), 'lib', 'logger')
+require 'lib/control'
+require 'lib/logger'
+require 'lib/temperature_conversion'
 
 module  HAIthermo
     

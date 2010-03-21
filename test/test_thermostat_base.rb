@@ -38,14 +38,4 @@ class TestThermostat < Test::Unit::TestCase
   #   assert_nil @control.thermostat(1)
   # end
   
-  # def test_thermo_conversions
-  #   @f = 68.0
-  #   @c = 20.0
-  #   @omni = 120
-  #   @thermo = HAIthermo::Thermostat::Base.new(@control, 1, "front")
-  #   assert_equal( @f, @thermo.c_to_f(@c) )
-  #   assert_equal( @c, @thermo.f_to_c(@f) )
-  #   assert_equal( @omni, @thermo.c_to_omnistat(@c) )
-  #   assert_equal( @c, @thermo.omnistat_to_c(@omni) )
-  # end
 end
