@@ -48,7 +48,7 @@ module  HAIthermo
     end
     
     def thermostat(address)
-      @thermostats.detect{ |thermo| thermo.address == address }
+      @thermostats.detect{ |thermo| thermo.address.value == address }
     end
     
     def thermostats_do(message, *args)
@@ -56,7 +56,7 @@ module  HAIthermo
     end
     
     def destroy_thermostat(address)
-      @thermostats.delete_if{ |thermo| thermo.address == address }
+      @thermostats.delete_if{ |thermo| thermo.address.value == address }
     end
 
 

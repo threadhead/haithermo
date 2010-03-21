@@ -3,21 +3,16 @@ module HAIthermo
     module Registers
       
       class RegisterError < StandardError; end
-      
-            
+                  
       def self.extended(base)
         base.instance_variable_set(:@registers, Array.new)
       end
+
       
-      def register_initialize(address)
+      def initialize_registers
         create_registers
         create_accessors
-        self.register_named(:address).value = address
       end
-      
-      # def [](name)
-      #   self.register_named( name.to_s )
-      # end
       
       
       def register_named(name)

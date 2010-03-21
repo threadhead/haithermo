@@ -14,8 +14,11 @@ module HAIthermo
       
       def initialize(my_control, thermo_address, name)
         extend HAIthermo::Thermostat::Registers
+        initialize_registers
+        
         @my_control = my_control
         @name = name
+        self.address.value = thermo_address
       end
 
       

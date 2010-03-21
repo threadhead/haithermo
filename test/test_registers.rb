@@ -5,7 +5,7 @@ class TestRegisters < Test::Unit::TestCase
   def setup
     @thermo = Class.new
     @thermo.extend( HAIthermo::Thermostat::Registers )
-    @thermo.register_initialize(1)
+    @thermo.initialize_registers
   end
   
   
