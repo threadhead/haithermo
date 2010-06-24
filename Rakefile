@@ -18,10 +18,35 @@ rescue LoadError
 end
 
 require 'rake/testtask'
-Rake::TestTask.new(:test) do |test|
-  test.libs << 'lib' << 'test'
-  test.pattern = 'test/**/test_*.rb'
-  test.verbose = true
+desc 'Run all unit and functional tests'
+task :test do
+  errors = %w(test:units test:functionals).collect do |task|
+    begin
+      Rake::Task[task].invoke
+      nil
+    rescue => e
+      task
+    end
+  end.compact
+  abort "Errors running #{errors.message}!" if errors.any?
+end
+
+
+namespace :test do
+  Rake::TestTask.new(:units) do |test|
+    test.libs << 'lib' << 'test'
+    test.pattern = 'test/unit/**/test_*.rb'
+    test.verbose = true
+  end
+  Rake::Task['test:units'].comment = "Run the unit tests in test/unit"
+  
+  Rake::TestTask.new(:functionals) do |test|
+    test.libs << 'lib' << 'test'
+    test.pattern = 'test/functional/**/test_*.rb'
+    test.verbose = true
+  end
+  Rake::Task['test:functionals'].comment = "Run the functional tests in test/functional"
+  
 end
 
 begin
