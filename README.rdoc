@@ -3,7 +3,7 @@
 A ruby library that implements the HAI Omnistat Thermostat protocol
 
 == Status
- 
+
 The gem is not published until I create more tests and refactor a bit.
 
 You can clone this into a directory and call it with 'require /path/to/haithermo/lib/haithermo' if so inclined.
@@ -12,4 +12,4 @@ While the library works (I'm running it 24/7) without problems, there is much to
 
 == Copyright
 
-Copyright (c) 2010 Karl Smith. See LICENSE for details.
+Copyright (c) 2014 Karl Smith. See LICENSE for details.
