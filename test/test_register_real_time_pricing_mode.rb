@@ -1,11 +1,11 @@
-require 'test/test_helper'
+require_relative 'test_helper'
 
 
-class TestRegisterRealTimePricingMode < Test::Unit::TestCase
+class TestRegisterRealTimePricingMode < MiniTest::Test
   def setup
     @register = HAIthermo::Thermostat::Register::RealTimePricingMode.new(0, "rea_time_pricing_mode", (0..3))
   end
-  
+
   def test_real_time_pricing_mode
     @register.value = 0
     assert_equal('low', @register.mode)
@@ -16,8 +16,8 @@ class TestRegisterRealTimePricingMode < Test::Unit::TestCase
     @register.value = 3
     assert_equal('critical', @register.mode)
   end
-  
-  
+
+
   def test_real_time_pricing_setting_mode
     @register.mode = :low
     assert_equal(0, @register.value)
@@ -28,25 +28,25 @@ class TestRegisterRealTimePricingMode < Test::Unit::TestCase
     @register.mode = :critical
     assert_equal(3, @register.value)
   end
-  
+
   def test_real_time_pricing_mode_low
     @register.low
     assert_equal(true, @register.low?)
   end
-  
+
   def test_real_time_pricing_mode_mid
     @register.mid
     assert_equal(true, @register.mid?)
   end
-  
+
   def test_real_time_pricing_mode_high
     @register.high
     assert_equal(true, @register.high?)
   end
-  
+
   def test_real_time_pricing_mode_critical
     @register.critical
     assert_equal(true, @register.critical?)
   end
-  
+
 end

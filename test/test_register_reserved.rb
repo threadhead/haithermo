@@ -1,12 +1,12 @@
-require 'test/test_helper'
+require_relative 'test_helper'
 
 
-class TestRegisterReserved < Test::Unit::TestCase
+class TestRegisterReserved < MiniTest::Test
   def setup
     @register = HAIthermo::Thermostat::Register::Reserved.new(0, "address", (0..127))
   end
 
-  
+
   def test_read_only_is_true
     assert @register.read_only?
   end
@@ -15,17 +15,17 @@ class TestRegisterReserved < Test::Unit::TestCase
   def test_reserved_is_true
     assert @register.reserved?
   end
-  
+
   # def test_setting_value_raises_error
   #   assert_raise(HAIthermo::Thermostat::Register::RegisterError) { @register.value = 3 }
   # end
 
-  
+
   def test_getting_value_raises_error
-    assert_raise(HAIthermo::Thermostat::Register::RegisterError) { @register.value }
+    assert_raises(HAIthermo::Thermostat::Register::RegisterError) { @register.value }
   end
 
-  
+
   def test_to_hash_returns_empty_hash
     assert_equal( {}, @register.to_hash )
   end

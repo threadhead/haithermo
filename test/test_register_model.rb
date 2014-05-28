@@ -1,12 +1,12 @@
-require 'test/test_helper'
+require_relative 'test_helper'
 
 
-class TestRegisterModel < Test::Unit::TestCase
+class TestRegisterModel < MiniTest::Test
   def setup
     @register = HAIthermo::Thermostat::Register::Model.new(0, "mode_of_thermostat", (0..127))
   end
 
-  
+
   # def test_read_only_is_true
   #   assert @register.read_only?
   # end

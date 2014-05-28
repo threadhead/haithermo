@@ -1,4 +1,10 @@
 require 'rubygems'
+require_relative 'thermostat'
+require_relative 'message'
+require_relative 'message_factory'
+# %w(thermostat message message_factory).each do |file|
+#   require_relative File.join(File.dirname(__FILE__), "#{file}")
+# end
 
 begin
   require 'serialport'
@@ -7,24 +13,21 @@ rescue
 end
 
 module  HAIthermo
-  %w(thermostat message message_factory).each do |file|
-    require File.join(File.dirname(__FILE__), "#{file}")
-  end
-   
- 
-  class Control    
+
+
+  class Control
     #the port settings are fixed and should not be changes per HAI Thermostats API
     BAUD_RATE = 300
     DATA_BITS = 8
     STOP_BITS = 1
     PARITY = SerialPort::NONE
-    
+
 
     def initialize(opts={})
       HAIthermo.loggers = Array(opts[:logger]) if opts[:logger]
       @thermostats = []
     end
-    
+
 
     def open(port="/dev/ttyS0")
       HAIthermo.log_info "OPEN SERIAL PORT (#{port}, #{BAUD_RATE}, #{DATA_BITS}, #{STOP_BITS}, #{PARITY})"
@@ -46,15 +49,15 @@ module  HAIthermo
     def add_thermostat(address, name)
       @thermostats << HAIthermo::Thermostat::Base.new(self, address, name)
     end
-    
+
     def thermostat(address)
       @thermostats.detect{ |thermo| thermo.address.value == address }
     end
-    
+
     def thermostats_do(message, *args)
       @thermostats.each{ |thermo| thermo.send(message, *args) }
     end
-    
+
     def destroy_thermostat(address)
       @thermostats.delete_if{ |thermo| thermo.address.value == address }
     end
@@ -69,19 +72,19 @@ module  HAIthermo
           self.send_string(packet.to_s)
           mf = MessageFactory.new.new_incoming_message( self.read_string )
           sent_times = 99 unless mf.kind_of?(Message::ReceiveNACK)
-          
+
         rescue InvalidMessageType, ChecksumError
           # puts $!.inspect
           HAIthermo.log_error($!)
-        end        
+        end
       end
-      
+
       if sent_times >= 4
         return false
       else
         return mf
       end
-      
+
     # rescue
     #   HAIthermo.log_error($!)
     #   return false
@@ -108,6 +111,6 @@ module  HAIthermo
       buffer
     end
 
-    
+
   end
 end

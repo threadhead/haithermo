@@ -1,34 +1,43 @@
 require 'rubygems'
 require 'rake'
 
-begin
-  require 'jeweler'
-  Jeweler::Tasks.new do |gem|
-    gem.name = "haithermo"
-    gem.summary = "A ruby library that implements the HAI Omnistat Thermostat protocol"
-    gem.description = "A ruby library that implements the HAI Omnistat Thermostat protocol"
-    gem.email = "threadhead@gmail.com"
-    gem.homepage = "http://github.com/threadhead/haithermo"
-    gem.authors = ["Karl Smith"]
-    # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
-  end
-  Jeweler::GemcutterTasks.new
-rescue LoadError
-  puts "Jeweler (or a dependency) not available. Install it with: gem install jeweler"
-end
+# begin
+#   require 'jeweler'
+#   Jeweler::Tasks.new do |gem|
+#     gem.name = "haithermo"
+#     gem.summary = "A ruby library that implements the HAI Omnistat Thermostat protocol"
+#     gem.description = "A ruby library that implements the HAI Omnistat Thermostat protocol"
+#     gem.email = "threadhead@gmail.com"
+#     gem.homepage = "http://github.com/threadhead/haithermo"
+#     gem.authors = ["Karl Smith"]
+#     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
+#   end
+#   Jeweler::GemcutterTasks.new
+# rescue LoadError
+#   puts "Jeweler (or a dependency) not available. Install it with: gem install jeweler"
+# end
+
+# require 'rake/testtask'
+# Rake::TestTask.new(:test) do |test|
+#   test.libs << 'lib' << 'test'
+#   test.pattern = 'test/**/*_test.rb'
+#   test.verbose = true
+# end
 
 require 'rake/testtask'
-Rake::TestTask.new(:test) do |test|
-  test.libs << 'lib' << 'test'
-  test.pattern = 'test/**/test_*.rb'
-  test.verbose = true
+
+Rake::TestTask.new do |t|
+  t.libs.push "lib"
+  t.test_files = FileList['test/*_test.rb']
+  t.verbose = true
 end
+
 
 begin
   require 'rcov/rcovtask'
   Rcov::RcovTask.new do |test|
     test.libs << 'test'
-    test.pattern = 'test/**/test_*.rb'
+    test.pattern = 'test/**/*_test.rb'
     test.verbose = true
   end
 rescue LoadError
@@ -37,11 +46,11 @@ rescue LoadError
   end
 end
 
-task :test => :check_dependencies
+# task :test => :check_dependencies
 
 task :default => :test
 
-require 'rake/rdoctask'
+require 'rdoc/task'
 Rake::RDocTask.new do |rdoc|
   version = File.exist?('VERSION') ? File.read('VERSION') : ""
 

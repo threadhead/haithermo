@@ -1,11 +1,11 @@
-require 'test/test_helper'
+require_relative 'test_helper'
 
 
-class TestRegisterThermostatMode < Test::Unit::TestCase
+class TestRegisterThermostatMode < MiniTest::Test
   def setup
     @register = HAIthermo::Thermostat::Register::ThermostatMode.new(0, "thermostat_mode", (0..4))
   end
-  
+
   def test_geting_mode
     @register.value = 0
     assert_equal('off', @register.mode)
@@ -18,7 +18,7 @@ class TestRegisterThermostatMode < Test::Unit::TestCase
     @register.value = 4
     assert_equal('emergency heat', @register.mode)
   end
-  
+
   def test_setting_mode
     @register.mode = :off
     assert_equal('off', @register.mode)
@@ -29,7 +29,7 @@ class TestRegisterThermostatMode < Test::Unit::TestCase
     @register.mode = :auto
     assert_equal('auto', @register.mode)
   end
-  
+
   def test_heating_mode
     @register.heat
     assert_equal(true, @register.heating?)
@@ -43,12 +43,12 @@ class TestRegisterThermostatMode < Test::Unit::TestCase
     @register.off
     assert_equal(false, @register.cooling?)
   end
-  
+
   def test_auto_mode
     @register.auto
     assert_equal(true, @register.auto?)
     @register.off
     assert_equal(false, @register.auto?)
   end
-  
+
 end

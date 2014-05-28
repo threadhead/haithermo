@@ -6,31 +6,31 @@ end
 module HAIthermo
   module Thermostat
     class BaseError < StandardError; end
-  
+
     class Base
       attr_reader :registers, :name
 
       include HAIthermo::Thermostat::Actions
-      
+
       def initialize(my_control, thermo_address, name)
         extend HAIthermo::Thermostat::Registers
         initialize_registers
-        
+
         @my_control = my_control
         @name = name
         self.address.value = thermo_address
       end
 
-      
+
 
       def get_registers_from_thermo(start_register, quantity)
         packet = PollForRegisters.new( self.address.value, start_register, quantity )
         message = @my_control.send_packet( packet )
-        
+
         @registers.set_value_range_string(message.data) if message
       end
-      
-      
+
+
       def set_registers_from_thermo(start_register, quantity)
         packet = SetRegisters.new( self.address.value,
                             start_register,
@@ -38,7 +38,7 @@ module HAIthermo
         message = @my_control.send_packet( packet )
         # should get back an ACK
       end
-      
+
 
     end
   end

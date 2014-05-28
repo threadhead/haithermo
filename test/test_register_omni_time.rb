@@ -1,12 +1,12 @@
-require 'test/test_helper'
+require_relative 'test_helper'
 
 
-class TestRegisterOmniTime < Test::Unit::TestCase
+class TestRegisterOmniTime < MiniTest::Test
   def setup
     @register = HAIthermo::Thermostat::Register::OmniTime.new(0, "morning_cool_time", (0..96))
   end
 
-  
+
   def test_converstion_to_time
     @register.value = 1
     assert_equal(Time.local(2000,1,1,0,15,0), @register.time)
@@ -15,7 +15,7 @@ class TestRegisterOmniTime < Test::Unit::TestCase
     @register.value = 55
     assert_equal(Time.local(2000,1,1,13,45,0), @register.time)
   end
-  
+
 
   def test_setting_omni_time_from_time
     @register.time = Time.local(2000,1,1,0,15,0)
@@ -36,7 +36,7 @@ class TestRegisterOmniTime < Test::Unit::TestCase
     assert_equal(55, @register.value)
   end
 
-  
+
   def test_returning_time_as_string
     @register.value = 1
     assert_equal("00:15", @register.time_s_24h)
@@ -52,5 +52,5 @@ class TestRegisterOmniTime < Test::Unit::TestCase
     @register.value = 55
     assert_equal("01:45pm", @register.time_s_12h)
   end
-  
+
 end

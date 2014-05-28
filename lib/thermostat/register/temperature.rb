@@ -1,9 +1,9 @@
-require 'lib/temperature_conversion'
+# require 'lib/temperature_conversion'
 
 module HAIthermo
   module Thermostat
     module Register
-      
+
       # A class to hold temperatures and handle conversion
       class Temperature < Base
         attr_accessor :default_scale
@@ -11,7 +11,7 @@ module HAIthermo
 
         def initialize(number, name, limits, temp=0, scale="omni")
           super(number, name, limits)
-          
+
           case scale.to_s[0].downcase
           when 'c'
             @value = c_to_omnistat(temp)
@@ -28,15 +28,15 @@ module HAIthermo
         def to_f
           omnistat_to_f( @value)
         end
-        
+
         def f
           self.to_f
         end
-        
+
         def fahrenheit
           self.to_f
         end
-        
+
         # because people can't spell fahrenheit!
         def farenheit
           self.to_f
@@ -45,11 +45,11 @@ module HAIthermo
         def f=(temp_f)
           @value = c_to_omnistat( f_to_c(temp_f))
         end
-        
+
         def fahrenheit=(temp_f)
           self.f = temp_f
         end
-        
+
         # because people can't spell fahrenheit!
         def farenheit=(temp_f)
           self.f = temp_f
@@ -60,50 +60,50 @@ module HAIthermo
         def to_c
           omnistat_to_c( @value )
         end
-        
+
         def c
           self.to_c
         end
-        
+
         def celsius
           self.to_c
         end
-        
+
         # becuase people can't spell celsius!
         def celcius
           self.to_c
         end
-        
+
         def c=(temp_c)
           @value = c_to_omnistat(temp_c)
         end
-        
+
         def celsius=(temp_c)
           self.c = temp_c
         end
-        
+
         def celcius=(temp_c)
           self.c = temp_c
         end
-        
-        
-        
+
+
+
         def to_o
           @value
         end
-        
+
         def o
           @value
         end
-        
+
         def omni
           @value
         end
-        
+
         def o=(temp_o)
           @value = temp_o
         end
-        
+
         def omni=(temp_o)
           self.o = temp_o
         end
@@ -125,7 +125,7 @@ module HAIthermo
 
 
       end
-      
+
     end
   end
 end

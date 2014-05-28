@@ -1,11 +1,11 @@
-require 'test/test_helper'
+require_relative 'test_helper'
 
 
-class TestRegisterCalibrationOffset < Test::Unit::TestCase
+class TestRegisterCalibrationOffset < MiniTest::Test
   def setup
     @register = HAIthermo::Thermostat::Register::CalibrationOffset.new(0, "calibration_offset", (1..59))
   end
-  
+
   def test_degrees_converts_to_celsius
     @register.value = 30
     assert_equal(0, @register.degrees)
@@ -22,8 +22,8 @@ class TestRegisterCalibrationOffset < Test::Unit::TestCase
     @register.value = 59
     assert_equal(14.5, @register.degrees)
   end
-  
-  
+
+
   def test_setting_degrees_sets_correct_value
     @register.degrees = 0
     assert_equal(30, @register.value)
@@ -40,8 +40,8 @@ class TestRegisterCalibrationOffset < Test::Unit::TestCase
     @register.degrees = -14.5
     assert_equal(1, @register.value)
   end
-  
-  
+
+
   def test_returns_degrees_string_for_display
     @register.degrees = 0
     assert_equal("0.0C", @register.degrees_s)

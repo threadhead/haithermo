@@ -1,11 +1,11 @@
-require 'test/test_helper'
+require_relative 'test_helper'
 
 
-class TestRegisterDayOfWeek < Test::Unit::TestCase
+class TestRegisterDayOfWeek < MiniTest::Test
   def setup
     @register = HAIthermo::Thermostat::Register::DayOfWeek.new(0, "day_of_week", (0..6))
   end
-  
+
   def test_degrees_converts_to_celsius
     @register.value = 0
     assert_equal('Monday', @register.wday)
@@ -14,8 +14,8 @@ class TestRegisterDayOfWeek < Test::Unit::TestCase
     @register.value = 6
     assert_equal('Sunday', @register.wday)
   end
-  
-  
+
+
   def test_setting_degrees_sets_correct_value
     @register.wday = 'Monday'
     assert_equal(0, @register.value)
@@ -24,5 +24,5 @@ class TestRegisterDayOfWeek < Test::Unit::TestCase
     @register.wday = 'Sunday'
     assert_equal(6, @register.value)
   end
-  
+
 end
