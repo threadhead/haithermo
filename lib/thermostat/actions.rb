@@ -1,7 +1,8 @@
 module HAIthermo
   module Thermostat  
     module Actions
-      
+      # These actions are helpers for complex data sending and requests.
+
       def get_initial_information
         action_info :get_initial_information
         get_model
@@ -60,6 +61,8 @@ module HAIthermo
         self.get_registers_from_thermo( 0x05, 2 )
       end
 
+
+
       def get_weekday_schedule
         action_debug :get_weekday_schedule
         self.get_registers_from_thermo( 0x15, 12)
@@ -86,19 +89,29 @@ module HAIthermo
 
       def set_outside_temp_c(temp_c)
         action_info "set_outside_temp_c: #{temp_c}"
-        @registers.set_value( 0x44, self.c_to_omnistat( temp_c ) )
-        self.set_registers_from_thermo( 0x44, 1 )
+        self.outside_temp.c = temp_c
+        self.set_outside_temp
       end
 
       def set_outside_temp_f(temp_f)
-        self.set_outside_temp_c( self.f_to_c( temp_f ))
+        action_info "set_outside_temp_c: #{temp_c}"
+        self.outside_temp.f = temp_f
+        self.set_outside_temp
       end
+
+      def set_outside_temp
+        self.set_registers_from_thermo( 0x44, 1 )
+      end
+
+
 
       def set_time
         action_info :set_time
         time = Time.now
-        hours, minutes, seconds = time.hour.chr, time.min.chr, time.sec.chr
-        self.set_registers_from_thermo( 0x41, seconds + minutes + hours )
+        self.hours.value = time.hour.chr
+        self.minutes.value = time.min.chr
+        self.seconds.value = time.sec.chr
+        self.set_registers_from_thermo( 0x41, 3 )
       end
 
 

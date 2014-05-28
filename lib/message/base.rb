@@ -23,6 +23,10 @@ module HAIthermo
         packet << @data
         packet << HAIthermo::MessageFactory.generate_checksum(packet).chr
       end
+      
+      def to_s
+        self.assemble_packet
+      end
     
     
       def host_message?

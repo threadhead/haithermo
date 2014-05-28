@@ -28,20 +28,20 @@
 -
   :number: 4
   :name: calibration_offset
-  :limits: !ruby/range 0..59
-  :type:
+  :limits: !ruby/range 1..59
+  :type: :calibration_offset
 
 -
   :number: 5
   :name: cool_setpoint_low_limit
   :limits: !ruby/range 0..255
-  :type: :temp
+  :type: :temperature
 
 -
   :number: 6
   :name: heat_setpoint_high_limit
   :limits: !ruby/range 0..255
-  :type: :temp
+  :type: :temperature
 
 -
   :number: 7
@@ -89,7 +89,7 @@
   :number: 14
   :name: clock_adjust
   :limits: !ruby/range 1..59
-  :type:
+  :type: :clock_adjust
 
 -
   :number: 15
@@ -116,19 +116,19 @@
   :number: 18
   :name: real_time_pricing_setback_mid
   :limits: !ruby/range 0..127
-  :type: :temp
+  :type: :temperature
 
 -
   :number: 19
   :name: real_time_pricing_setback_high
   :limits: !ruby/range 0..127
-  :type: :temp
+  :type: :temperature
 
 -
   :number: 20
   :name: real_time_pricing_setback_critical
   :limits: !ruby/range 0..127
-  :type: :temp
+  :type: :temperature
 
 
 
@@ -144,67 +144,67 @@
   :number: 22
   :name: weekday_morning_cool_setpoint
   :limits: !ruby/range 0..255
-  :type: :temp
+  :type: :temperature
 
 -
   :number: 23
   :name: weekday_morning_heat_setpoint
   :limits: !ruby/range 0..255
-  :type: :temp
+  :type: :temperature
 
 -
   :number: 24
   :name: weekday_day_time
   :limits: !ruby/range 0..255
   :type: :omni_time
-    
+
 -
   :number: 25
   :name: weekday_day_cool_setpoint
   :limits: !ruby/range 0..255
-  :type: :temp
+  :type: :temperature
 
 -
   :number: 26
   :name: weekday_day_heat_setpoint
   :limits: !ruby/range 0..255
-  :type: :temp
+  :type: :temperature
 
 -
   :number: 27
   :name: weekday_evening_time
   :limits: !ruby/range 0..255
   :type: :omni_time
-    
+
 -
   :number: 28
   :name: weekday_evening_cool_setpoint
   :limits: !ruby/range 0..255
-  :type: :temp
+  :type: :temperature
 
 -
   :number: 29
   :name: weekday_evening_heat_setpoint
   :limits: !ruby/range 0..255
-  :type: :temp
+  :type: :temperature
 
 -
   :number: 30
   :name: weekday_night_time
   :limits: !ruby/range 0..255
   :type: :omni_time
-    
+
 -
   :number: 31
   :name: weekday_night_cool_setpoint
   :limits: !ruby/range 0..255
-  :type: :temp
+  :type: :temperature
 
 -
   :number: 32
   :name: weekday_night_heat_setpoint
   :limits: !ruby/range 0..255
-  :type: :temp
+  :type: :temperature
 
 
 -
@@ -212,72 +212,72 @@
   :name: saturday_morning_time
   :limits: !ruby/range 0..255
   :type: :omni_time
-    
+
 -
   :number: 34
   :name: saturday_morning_cool_setpoint
   :limits: !ruby/range 0..255
-  :type: :temp
+  :type: :temperature
 
 -
   :number: 35
   :name: saturday_morning_heat_setpoint
   :limits: !ruby/range 0..255
-  :type: :temp
+  :type: :temperature
 
 -
   :number: 36
   :name: saturday_day_time
   :limits: !ruby/range 0..255
   :type: :omni_time
-    
+
 -
   :number: 37
   :name: saturday_day_cool_setpoint
   :limits: !ruby/range 0..255
-  :type: :temp
+  :type: :temperature
 
 -
   :number: 38
   :name: saturday_day_heat_setpoint
   :limits: !ruby/range 0..255
-  :type: :temp
+  :type: :temperature
 
 -
   :number: 39
   :name: saturday_evening_time
   :limits: !ruby/range 0..255
   :type: :omni_time
-    
+
 -
   :number: 40
   :name: saturday_evening_cool_setpoint
   :limits: !ruby/range 0..255
-  :type: :temp
+  :type: :temperature
 
 -
   :number: 41
   :name: saturday_evening_heat_setpoint
   :limits: !ruby/range 0..255
-  :type: :temp
+  :type: :temperature
 
 -
   :number: 42
   :name: saturday_night_time
   :limits: !ruby/range 0..255
   :type: :omni_time
-    
+
 -
   :number: 43
   :name: saturday_night_cool_setpoint
   :limits: !ruby/range 0..255
-  :type: :temp
+  :type: :temperature
 
 -
   :number: 44
   :name: saturday_night_heat_setpoint
   :limits: !ruby/range 0..255
-  :type: :temp
+  :type: :temperature
 
 
 -
@@ -285,73 +285,72 @@
   :name: sunday_morning_time
   :limits: !ruby/range 0..255
   :type: :omni_time
-    
+
 -
   :number: 46
   :name: sunday_morning_cool_setpoint
   :limits: !ruby/range 0..255
-  :type: :temp
+  :type: :temperature
 
 -
   :number: 47
   :name: sunday_morning_heat_setpoint
   :limits: !ruby/range 0..255
-  :type: :temp
+  :type: :temperature
 
 -
   :number: 48
   :name: sunday_day_time
   :limits: !ruby/range 0..255
   :type: :omni_time
-    
+
 -
   :number: 49
   :name: sunday_day_cool_setpoint
   :limits: !ruby/range 0..255
-  :type: :temp
+  :type: :temperature
 
 -
   :number: 50
   :name: sunday_day_heat_setpoint
   :limits: !ruby/range 0..255
-  :type: :temp
+  :type: :temperature
 
 -
   :number: 51
   :name: sunday_evening_time
   :limits: !ruby/range 0..255
   :type: :omni_time
-    
+
 -
   :number: 52
   :name: sunday_evening_cool_setpoint
   :limits: !ruby/range 0..255
-  :type: :temp
+  :type: :temperature
 
 -
   :number: 53
   :name: sunday_evening_heat_setpoint
   :limits: !ruby/range 0..255
-  :type: :temp
+  :type: :temperature
 
 -
   :number: 54
   :name: sunday_night_time
   :limits: !ruby/range 0..255
   :type: :omni_time
-    
+
 -
   :number: 55
   :name: sunday_night_cool_setpoint
   :limits: !ruby/range 0..255
-  :type: :temp
+  :type: :temperature
 
 -
   :number: 56
   :name: sunday_night_heat_setpoint
   :limits: !ruby/range 0..255
-  :type: :temp
-
+  :type: :temperature
 
 -
   :number: 57
@@ -364,94 +363,93 @@
   :name: day_of_week
   :limits: !ruby/range 0..6
   :type: :day_of_week
-    
+
 -
   :number: 59
   :name: cool_setpoint
   :limits: !ruby/range 0..255
-  :type: :temp
+  :type: :temperature
 
 -
   :number: 60
   :name: heat_setpoint
   :limits: !ruby/range 0..255
-  :type: :temp
+  :type: :temperature
 
 -
   :number: 61
   :name: thermostat_mode
   :limits: !ruby/range 0..4
-  :type:
-    
+  :type: :thermostat_mode
+
 -
   :number: 62
   :name: fan_status
   :limits: !ruby/range 0..1
-  :type:
-    
+  :type: :fan_status
+
 -
   :number: 63
   :name: hold
   :limits: [0, 255]
-  :type:
+  :type: :hold
 
 -
   :number: 64
   :name: actual_temperature
   :limits: !ruby/range 0..255
-  :type: :temp
+  :type: :temperature
 
 -
   :number: 65
   :name: seconds
   :limits: !ruby/range 0..59
   :type:
-    
+
 -
   :number: 66
   :name: minutes
   :limits: !ruby/range 0..59
   :type:
-    
+
 -
   :number: 67
   :name: hours
   :limits: !ruby/range 0..23
   :type:
-    
+
 -
   :number: 68
   :name: outside_temperature
   :limits: !ruby/range 0..255
-  :type: :temp
+  :type: :temperature
 
 -
   :number: 69
   :name: reserved
   :limits: []
   :type: :reserved
-    
+
 -
   :number: 70
   :name: real_time_pricing_mode
   :limits: !ruby/range 0..3
-  :type:
-    
+  :type: :real_time_pricing_mode
+
 -
   :number: 71
   :name: current_mode
   :limits: !ruby/range 0..2
   :type: :current_mode
-    
+
 -
   :number: 72
   :name: output_status
   :limits: !ruby/range 0..255
   :type: :output_status
-    
+
 -
   :number: 73
   :name: model_of_thermostat
   :limits: !ruby/range 0..255
   :type: :model
-    

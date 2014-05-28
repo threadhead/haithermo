@@ -1,9 +1,12 @@
 require 'rubygems'
-require 'test/unit'
+require 'minitest/autorun'
+
+require "minitest/reporters"
+Minitest::Reporters.use!
+
 require 'pp'
 require 'mocha'
+require "mocha/mini_test"
 
-require 'hai_thermo'
-
-class Test::Unit::TestCase
-end
+# require '../hai_thermo'
+require File.join(File.dirname(__FILE__), '..', 'hai_thermo')
